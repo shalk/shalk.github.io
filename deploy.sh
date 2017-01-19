@@ -3,6 +3,8 @@ hexo generate
 
 hexo deploy
 
+git pull
+
 git add .
 
 git commit 
