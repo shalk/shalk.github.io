@@ -1,9 +1,10 @@
-hexo clean
+#hexo clean
 hexo generate
+
 hexo deploy
 
 git add .
 
 git commit 
 
-git push
+git push github hexo
