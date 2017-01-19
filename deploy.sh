@@ -7,4 +7,4 @@ git add .
 
 git commit 
 
-git push github hexo
+git push 
