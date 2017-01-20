@@ -89,9 +89,9 @@ hexo server
 
   ```
 
-4.  分别在coding上和github上创建repo,假定我用户名是zhangsan,coding.net创建 repo :zhangsan,github创建 repo: zhangsan.github.io
+4. 分别在coding上和github上创建repo,假定我用户名是zhangsan,coding.net创建 repo :zhangsan,github创建 repo: zhangsan.github.io
 
-5. 按照hexo调用git的插件
+5. 安装hexo调用git的插件
 ```
 npm install hexo-deployer-git --save
 ```
@@ -107,7 +107,6 @@ npm install hexo-deployer-git --save
 ```
 
 7. 部署
-执行
 ```
 hexo clean
 hexo generate
