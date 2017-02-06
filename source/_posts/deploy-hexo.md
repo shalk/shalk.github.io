@@ -96,7 +96,7 @@ hexo server
 npm install hexo-deployer-git --save
 ```
 6. 在本地填写远程仓库的地址,让hexo知道部署到哪里去
-进入 blog/hexo 目录,修改一下全局配置文件`_config`,在末尾加入
+   进入 blog/hexo 目录,修改一下全局配置文件`_config`,在末尾加入
 ```
     deploy:
       type: git
@@ -116,7 +116,7 @@ hexo deploy
 
 ## 备份环境
 
-经过一段时间的使用,需要修改主题,又要修改配置.
+经过一段时间的使用,需要修改主题,也要修改配置.
 
 但换了一个系统或者PC,需要准备这套环境,又要从头搭建一遍太麻烦可能会遗忘配置.
 
@@ -142,10 +142,10 @@ git push -u  origin hexo
 ```
 如果更换环境,只需要如下步骤
 1. 安装git(配置git),nodejs,
-2. git clone git@github.com:zhangsan/zhangsan.github.io.git  hexo
-3. cd hexo ; git checkout -b hexo
+2. `git clone git@github.com:zhangsan/zhangsan.github.io.git  hexo`
+3. `cd hexo` ; `git checkout hexo`
 4. 安装各种npm包
-```
+```shell
   npm install -g hexo-cli
 
   npm install
@@ -153,7 +153,7 @@ git push -u  origin hexo
   npm install hexo-deployer-git --save   
 ```
 5. 生成部署
-```
+```shell
 hexo generate
 hexo deploy
 ```
@@ -161,8 +161,8 @@ hexo deploy
 
 ##  参考
 
-https://fzy-line.github.io/2016/11/30/Github-Pages-Hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2%EF%BC%88%E4%B8%80%EF%BC%89/
-http://blog.csdn.net/xiaoliuge01/article/details/50997754
+[Github Pages + Hexo搭建博客](https://fzy-line.github.io/2016/11/30/Github-Pages-Hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2%EF%BC%88%E4%B8%80%EF%BC%89/)
+[部署coding.net和github](http://blog.csdn.net/xiaoliuge01/article/details/50997754)
 
 
 ## END
