@@ -1,7 +1,8 @@
 ---
 title: deploy hexo
 date: 2017-01-20 10:26:02
-tags:
+tags: [hexo, github, blog]
+categories: hexo
 ---
 
 
