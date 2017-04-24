@@ -89,7 +89,7 @@ Last updated: November 08. 2012
 1. Check_MK的灵活的通知系统从1.2.1i2 
 As of version 1.2.1i2 Check_MK offers a new and very flexible system">
 <meta property="og:type" content="article">
-<meta property="og:title" content="灵活的通知">
+<meta property="og:title" content="Shalk's Blog">
 <meta property="og:url" content="http://yoursite.com/2017/04/24/checkmk_flexible_notifications/index.html">
 <meta property="og:site_name" content="Shalk's Blog">
 <meta property="og:description" content="灵活的通知翻译自http://mathias-kettner.com/checkmk_flexible_notifications.html
@@ -99,9 +99,9 @@ As of version 1.2.1i2 Check_MK offers a new and very flexible system">
 <meta property="og:image" content="http://yoursite.com/2017/04/24/checkmk_flexible_notifications/custom-notification.png">
 <meta property="og:image" content="http://yoursite.com/2017/04/24/checkmk_flexible_notifications/notifications-plain.png">
 <meta property="og:image" content="http://yoursite.com/2017/04/24/checkmk_flexible_notifications/flexible-notifications.png">
-<meta property="og:updated_time" content="2017-04-24T11:42:32.228Z">
+<meta property="og:updated_time" content="2017-04-24T11:52:33.935Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="灵活的通知">
+<meta name="twitter:title" content="Shalk's Blog">
 <meta name="twitter:description" content="灵活的通知翻译自http://mathias-kettner.com/checkmk_flexible_notifications.html
 Last updated: November 08. 2012
 1. Check_MK的灵活的通知系统从1.2.1i2 
@@ -140,7 +140,7 @@ As of version 1.2.1i2 Check_MK offers a new and very flexible system">
 
 
 
-  <title> 灵活的通知 | Shalk's Blog </title>
+  <title>  | Shalk's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -297,7 +297,7 @@ As of version 1.2.1i2 Check_MK offers a new and very flexible system">
             
             
               
-                灵活的通知
+                
               
             
           </h1>
@@ -312,7 +312,7 @@ As of version 1.2.1i2 Check_MK offers a new and very flexible system">
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-24T19:19:05+08:00">
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-24T19:42:32+08:00">
                 2017-04-24
               </time>
             
@@ -353,12 +353,18 @@ As of version 1.2.1i2 Check_MK offers a new and very flexible system">
 <h2 id="1-Check-MK的灵活的通知系统"><a href="#1-Check-MK的灵活的通知系统" class="headerlink" title="1. Check_MK的灵活的通知系统"></a>1. Check_MK的灵活的通知系统</h2><p>从1.2.1i2 </p>
 <p>As of version <strong>1.2.1i2</strong> Check_MK offers a new and very flexible system for sending notifications. This system has a few advantages over the classical Nagios-way of doing it:</p>
 <ul>
-<li>Each user can have <em>multiple</em> notification methods with separate filters. That way you can for example send always emails, but SMS only for certain services or in certain timeperiods - <strong>without creating multiple contacts per user</strong>!</li>
-<li>Changes in the notification configuration do not need any restart of the monitoring core.</li>
-<li>Users can change their personal settings themselves via Multisite.</li>
-<li>Adding own notification scripts (for SMS, Ticket systems, etc.) is very simple and does not need anydefine command or similar declaration.</li>
-<li>The configuration can easily be done via WATO - but also with your text editor.</li>
+<li><p>Each user can have <em>multiple</em> notification methods with separate filters. That way you can for example send always emails, but SMS only for certain services or in certain timeperiods - <strong>without creating multiple contacts per user</strong>!</p>
+</li>
+<li><p>Changes in the notification configuration do not need any restart of the monitoring core.</p>
+</li>
+<li><p>Users can change their personal settings themselves via Multisite.</p>
+</li>
+<li><p>Adding own notification scripts (for SMS, Ticket systems, etc.) is very simple and does not need anydefine command or similar declaration.</p>
+</li>
+<li><p>The configuration can easily be done via WATO - but also with your text editor.</p>
+</li>
 </ul>
+<a id="more"></a>
 <h2 id="2-The-Basic-Principle"><a href="#2-The-Basic-Principle" class="headerlink" title="2. The Basic Principle"></a>2. The Basic Principle</h2><p>The basic idea is that we move the complex things out of the monitoring core (Nagios, Icinga, etc.). If an alert happens then we let the core just decide <em>whom</em> to notify - but not <em>how</em>. For each notification the core simply calls check_mk –notify while providing all neccessary information about the alert.</p>
 <p>check_mk –notify will then read the personal settings of the notified user and decides how to notify. Here additional filters take place so the notification might be dropped at all. Also the user can have multiple ways of notifications at the same time.</p>
 <p>The personal notification settings can be editied by the admin or the user himself (if you do not disallow this) via Multisite/WATO.</p>
