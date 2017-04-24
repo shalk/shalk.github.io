@@ -1,9 +1,3 @@
----
-title: 灵活的通知
-date: 2017-04-24 19:19:05
-tags:
----
-
 # 灵活的通知
 
 翻译自http://mathias-kettner.com/checkmk_flexible_notifications.html
@@ -17,10 +11,16 @@ Last updated: November 08. 2012
 As of version **1.2.1i2** Check_MK offers a new and very flexible system for sending notifications. This system has a few advantages over the classical Nagios-way of doing it:
 
 - Each user can have *multiple* notification methods with separate filters. That way you can for example send always emails, but SMS only for certain services or in certain timeperiods - **without creating multiple contacts per user**!
+
 - Changes in the notification configuration do not need any restart of the monitoring core.
+
 - Users can change their personal settings themselves via Multisite.
+
 - Adding own notification scripts (for SMS, Ticket systems, etc.) is very simple and does not need anydefine command or similar declaration.
+
 - The configuration can easily be done via WATO - but also with your text editor.
+
+<!-- more -->
 
 ## 2. The Basic Principle
 
