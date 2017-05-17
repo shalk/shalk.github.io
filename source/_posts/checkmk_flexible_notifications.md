@@ -10,7 +10,7 @@ categories: check_mk
 
 Last updated: November 08. 2012
 
-## 1. Check_MK的灵活的通知系统
+# 1. Check_MK的灵活的通知系统
 
 从1.2.1i2 
 
@@ -28,7 +28,7 @@ As of version **1.2.1i2** Check_MK offers a new and very flexible system for s
 
 <!-- more -->
 
-## 2. The Basic Principle
+# 2. The Basic Principle
 
 The basic idea is that we move the complex things out of the monitoring core (Nagios, Icinga, etc.). If an alert happens then we let the core just decide *whom* to notify - but not *how*. For each notification the core simply calls check_mk --notify while providing all neccessary information about the alert.
 
@@ -36,7 +36,7 @@ check_mk --notify will then read the personal settings of the notified user and
 
 The personal notification settings can be editied by the admin or the user himself (if you do not disallow this) via Multisite/WATO.
 
-## 3. Preparing Notifications in General
+# 3. Preparing Notifications in General
 
 Setting up the notifications takes some care. If you miss one of the following steps then the most probable case is that simply nothing will happen. You need to do the following:
 
@@ -58,7 +58,7 @@ Setting up the notifications takes some care. If you miss one of the following s
 
 5. Restart your core with cmk -R or activating changes in WATO.
 
-## 4. Testing and Debugging
+# 4. Testing and Debugging
 
 When dealing with notifications it's important to know how to test and debug your setup. A very easy way to send test-notifications is to pick a random service that is contained in the upper contact group, open the*Commands* dialog and select *Custom Notification*:
 
@@ -98,7 +98,7 @@ Here is an example output for a flexible notification of the user hirni:
 
 ```
 
-## 5. Using Plain Email Notification
+# 5. Using Plain Email Notification
 
 Before version **1.2.1i2** plain email notification was the only way to go (without own modification to the Nagios configuration). This is still the default. If you have done the upper steps then everything should now work. The subject and body of the email can be customized in the global settings.
 
@@ -112,7 +112,7 @@ Note: The settings done here (enabling, the notification timeperiod and which ev
 
 That way you make sure that notifications make it out of the core and into Check_MK's notification system. Filtering can then be done in a more flexible way using Check_MK, as we will see later.
 
-## 6. Writing notification scripts
+# 6. Writing notification scripts
 
 The next step in using flexible notifications is writing your own *notification scripts*. Put your own scripts into the directory notifications. It exists in parallel to checks. If this directory does not exist then your are likely to have a too old version of Check_MK. If you are using OMD then better use the directory~/local/share/check_mk/notifications within the site.
 
@@ -142,7 +142,7 @@ echo "I am called. Yupei."
 
 ```
 
-## 7. Configuring flexible configurations in WATO
+# 7. Configuring flexible configurations in WATO
 
 Once you have at least one notification script you can start with the configuration. This is done on a per-user-base by setting the *Notification Method* to *Flexible Custom Notifications*. Each user can have an arbitrary number of configuration entries. Each time a notification is triggered by the core all those entries are being processed. This might result in zero, one or more actual notifications. The following screen shot shows a table with just one entry using the (shipped) notification script *Debug Notifications*. This script just logs the values of all context variables into the notification log (if it's enabled).
 
@@ -150,39 +150,39 @@ Once you have at least one notification script you can start with the configurat
 
 You have the following configuration options:
 
-### 7.1. Notification Plugin
+## 7.1. Notification Plugin
 
 The script to call - if you have supplied a title in a comment in the second line of the script then this will be displayed instead of the actual script name.
 
-### 7.2. Disabled
+## 7.2. Disabled
 
 By checking this box the entry will be disabled and no notification done. Just as all other settings in the flexible table no Nagios restart is neccessary. After saving the settings will immediately get active.
 
-### 7.3. Timeperiod
+## 7.3. Timeperiod
 
 Here you can restrict the notifications to a certain monitoring timeperiod. New timeperiods can be defined with the WATO module *Timeperiods*. Note: you can only select timeperiods that are defined with WATO here. If you do a manual configuration (see later), you can use all kinds of timeperiods.
 
-### 7.4. Restrict to n'th to m'th notification (escalation)
+## 7.4. Restrict to n'th to m'th notification (escalation)
 
 When you have enabled repeated notifications (by setting the notification_interval to a non-zero value) then you can have this entry only deal with certain repetitions of the notification. That way you can have e.g. the first two being sent via email and further notifications via SMS (you need two entries in the table for this).
 
-### 7.5. Host Events / Service Events
+## 7.5. Host Events / Service Events
 
 This lets you enable/disable notifications for certain types of events. If you have a close look then you will see that here you can also disable notifications for acknowledgements - even if Nagios does not allow to disable them. Please note that an event type must be enabled in the general notification settings of a user as well.
 
-### 7.6. Limit to the following hosts
+## 7.6. Limit to the following hosts
 
 Here you can set hosts for this notification. The hosts need to be specified as exact match and are case sensitive. Please note that a user cannot get notification for any host he is not a contact for - regardless what you configure here. If you do not use this option do not configure at least one pattern then no filter on the host name will be applied.
 
-### 7.7. Limit to the following services
+## 7.7. Limit to the following services
 
 This provides an easy way to select important services to be notified in some special ways. Just as in the other WATO configuration, specify a list of regular expressions that match the *beginning* of the service descriptions. Please note that a user cannot get notification for any service he is not a contact for - regardless what you configure here. If you do not use this option do not configure at least one pattern then no filter on the service name will be applied.
 
-### 7.8. Plugin Arguments
+## 7.8. Plugin Arguments
 
 The texts that are entered here are provided to the notification script in form of environment macros. This allows you to provide additional information, e.g. a mobile phone number. What arguments are required and which meaning the have depends on the notification script.
 
-## 8. Real World Notification Scripts
+# 8. Real World Notification Scripts
 
 The last and final step is to write real notifications scripts. You are free to send emails, SMS, place phone calls via Asterisk and do other fancy stuff. Your script or program receives all important data in environment variables, which are prefixed with NOTIFY\_. The shipped debug script shows you which variables are defined. Here is an example log output. The mentioned plugin arguments are provided as a space separated list in NOTIFY_PARAMETERS and also in distinct variables in NOTIFY_PARAMETER_1, NOTIFY_PARAMETER_2, ....
 
@@ -225,11 +225,11 @@ notify.log
 
 Please note that the debug notification script has been removed in version 1.2.7i4. Now you can configure the HTML notification script to output all variables.
 
-## 9. Check_MK Packages (MKP)
+# 9. Check_MK Packages (MKP)
 
 Notification scripts can be packaged in [Check_MK Packages](http://mathias-kettner.com/checkmk_packages.html) (MKPs). Simply write them, put them into the correct directory and the packager will find them.
 
-## 10. Non-WATO configuration
+# 10. Non-WATO configuration
 
 All features described in the document can also be used without WATO. If you prefer editing text files or want to generate them by some scripts, please simply create one user with WATO and then have a look intoetc/check_mk/conf.d/wato/contacts.mk. The configuration of the flexible notifications is saved in the keynotification_method. It is a pair of the string 'flexible' and a dictionary with all settings:
 
@@ -272,7 +272,7 @@ contacts.update(
 
 You can put this directly into main.mk or into any file below conf.d. Note: this will not only create a notification configuration but also create the actual contact definition for Nagios. Please remove any manual contact definition in that case.
 
-##  11.译者后记
+#  11.译者后记
 
 
 
