@@ -1,4 +1,10 @@
-# 灵活的通知
+---
+title: 灵活的通知
+date: 2017-04-24 10:26:02
+tags: [check_mk, monitor]
+categories: check_mk
+---
+
 
 翻译自http://mathias-kettner.com/checkmk_flexible_notifications.html
 
