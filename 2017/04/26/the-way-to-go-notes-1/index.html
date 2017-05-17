@@ -84,19 +84,33 @@
 
 
 
-<meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick">
+<meta name="description" content="Go入门指南学习笔记-1Golang的起源发展和特点Go 是有谷歌大神, Rob pike(bell plan9), Robert Griesemer(hotspot), ken tompson(C, UNIX, PLAN9 )
+这几个编程语言界的大神就在2008年就开始琢磨, 2009年公开发布的. 2010年年度语言.
+目前go的趋势如下:
+
+2016和2017在快速的上升.
+Go的设计目标是">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://yoursite.com/2017/01/19/hello-world/index.html">
+<meta property="og:title" content="the way to go notes 1">
+<meta property="og:url" content="http://yoursite.com/2017/04/26/the-way-to-go-notes-1/index.html">
 <meta property="og:site_name" content="Shalk's Blog">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick">
-<meta property="og:updated_time" content="2017-01-19T03:51:46.601Z">
+<meta property="og:description" content="Go入门指南学习笔记-1Golang的起源发展和特点Go 是有谷歌大神, Rob pike(bell plan9), Robert Griesemer(hotspot), ken tompson(C, UNIX, PLAN9 )
+这几个编程语言界的大神就在2008年就开始琢磨, 2009年公开发布的. 2010年年度语言.
+目前go的趋势如下:
+
+2016和2017在快速的上升.
+Go的设计目标是">
+<meta property="og:image" content="http://yoursite.com/2017/04/26/the-way-to-go-notes-1/tiobe index of go.png">
+<meta property="og:updated_time" content="2017-04-26T13:04:07.580Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hello World">
-<meta name="twitter:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick">
+<meta name="twitter:title" content="the way to go notes 1">
+<meta name="twitter:description" content="Go入门指南学习笔记-1Golang的起源发展和特点Go 是有谷歌大神, Rob pike(bell plan9), Robert Griesemer(hotspot), ken tompson(C, UNIX, PLAN9 )
+这几个编程语言界的大神就在2008年就开始琢磨, 2009年公开发布的. 2010年年度语言.
+目前go的趋势如下:
+
+2016和2017在快速的上升.
+Go的设计目标是">
+<meta name="twitter:image" content="http://yoursite.com/2017/04/26/the-way-to-go-notes-1/tiobe index of go.png">
 
 
 
@@ -124,13 +138,13 @@ Quick">
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/01/19/hello-world/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/04/26/the-way-to-go-notes-1/"/>
 
 
 
 
 
-  <title> Hello World | Shalk's Blog </title>
+  <title> the way to go notes 1 | Shalk's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -263,7 +277,7 @@ Quick">
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/19/hello-world/">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/26/the-way-to-go-notes-1/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="Shalk">
@@ -287,7 +301,7 @@ Quick">
             
             
               
-                Hello World
+                the way to go notes 1
               
             
           </h1>
@@ -302,8 +316,8 @@ Quick">
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-19T11:51:46+08:00">
-                2017-01-19
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-26T20:31:54+08:00">
+                2017-04-26
               </time>
             
 
@@ -338,15 +352,26 @@ Quick">
       
 
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+        <h1 id="Go入门指南学习笔记-1"><a href="#Go入门指南学习笔记-1" class="headerlink" title="Go入门指南学习笔记-1"></a>Go入门指南学习笔记-1</h1><h2 id="Golang的起源发展和特点"><a href="#Golang的起源发展和特点" class="headerlink" title="Golang的起源发展和特点"></a>Golang的起源发展和特点</h2><p>Go 是有谷歌大神, Rob pike(bell plan9), Robert Griesemer(hotspot), ken tompson(C, UNIX, PLAN9 )</p>
+<p>这几个编程语言界的大神就在2008年就开始琢磨, 2009年公开发布的. 2010年年度语言.</p>
+<p>目前go的趋势如下:</p>
+<p><img src="/2017/04/26/the-way-to-go-notes-1/tiobe index of go.png" alt=""></p>
+<p>2016和2017在快速的上升.</p>
+<p>Go的设计目标是 将动态语言的易开发性和静态语言的高效安全结合在一起.</p>
+<p>因此Go有三个重要特点: 快速编译, 快速执行,快速开发.</p>
+<p>另外Go还有另一方面特征,就是并发的特点,有许多特性支持并发编程.</p>
+<p>包管理:Go的包管理非常方便,借鉴了动态语言的包管理.</p>
+<p>文档:Go的文档内嵌在源码中, 生成文档很方便.</p>
+<p>性能:一般的, 我们认为 Go比 动态语言都快,比java 快, 比C 稍微慢一点点.</p>
+<p>缺陷: Go的每一个编译文件中 都有一个runtime,所以Go语言的可执行程序比较大.</p>
+<h2 id="Golang的安装与配置"><a href="#Golang的安装与配置" class="headerlink" title="Golang的安装与配置"></a>Golang的安装与配置</h2><p>简单说说windows安装, 去官网下载可执行程序</p>
+<p>下一步 安装,路径建议不要有空格或者中文.</p>
+<p>比如C:\Go</p>
+<p>安装完成后,配置一下环境变量</p>
+<p>我的电脑 属性, 高级环境变量</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">GOROOT 配置成  C:\Go\</div></pre></td></tr></table></figure>
+<p>`</p>
+<h2 id="Golang的命令与调试"><a href="#Golang的命令与调试" class="headerlink" title="Golang的命令与调试"></a>Golang的命令与调试</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">go install</div><div class="line">go build</div><div class="line">go fmt</div><div class="line">go doc</div><div class="line">go get</div><div class="line">go fix</div><div class="line">go test</div></pre></td></tr></table></figure>
 
       
     </div>
@@ -373,15 +398,15 @@ Quick">
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2017/04/24/checkmk_flexible_notifications/" rel="next" title="灵活的通知">
+                <i class="fa fa-chevron-left"></i> 灵活的通知
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/01/20/deploy-hexo/" rel="prev" title="deploy hexo">
-                deploy hexo <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -504,7 +529,7 @@ Quick">
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Quick-Start"><span class="nav-number">1.</span> <span class="nav-text">Quick Start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-a-new-post"><span class="nav-number">1.1.</span> <span class="nav-text">Create a new post</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run-server"><span class="nav-number">1.2.</span> <span class="nav-text">Run server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate-static-files"><span class="nav-number">1.3.</span> <span class="nav-text">Generate static files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deploy-to-remote-sites"><span class="nav-number">1.4.</span> <span class="nav-text">Deploy to remote sites</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Go入门指南学习笔记-1"><span class="nav-number">1.</span> <span class="nav-text">Go入门指南学习笔记-1</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Golang的起源发展和特点"><span class="nav-number">1.1.</span> <span class="nav-text">Golang的起源发展和特点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Golang的安装与配置"><span class="nav-number">1.2.</span> <span class="nav-text">Golang的安装与配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Golang的命令与调试"><span class="nav-number">1.3.</span> <span class="nav-text">Golang的命令与调试</span></a></li></ol></li></ol></div>
             
 
           </div>
