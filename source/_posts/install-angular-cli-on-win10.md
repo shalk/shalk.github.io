@@ -1,7 +1,7 @@
 ---
 title: install angular-cli on win10
 date: 2017-05-26 17:03:28
-tags: angular win10
+tags: angular
 ---
 
 ## 写在前面
@@ -77,4 +77,3 @@ npm install -g @angular/cli
 [node-gyp之后安装的东东](https://github.com/nodejs/node-gyp)
 
 ##END
-
