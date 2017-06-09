@@ -18,6 +18,7 @@ tags: angular
 ## 问题
 安装angular-cli的时候还是遇到一些报错.
 
+<!--  more -->
 大漠的建议是,
 1. 搭建一个梯子, 然后用`npm proxy` 安装 angular-cli.
 2. ppt中还提出 windows要安装visual stutio.
