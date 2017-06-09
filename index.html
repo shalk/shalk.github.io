@@ -258,6 +258,207 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/09/TIJ-review-chapter14-type-information/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Shalk">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Shalk's Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="Shalk's Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/06/09/TIJ-review-chapter14-type-information/" itemprop="url">
+                  TIJ review chapter14 type information
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-06-09T11:03:15+08:00">
+                2017-06-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="TIJ-复习-RTTI"><a href="#TIJ-复习-RTTI" class="headerlink" title="TIJ 复习 RTTI"></a>TIJ 复习 RTTI</h1><h2 id="QA"><a href="#QA" class="headerlink" title="QA"></a>QA</h2><ol>
+<li>什么是RTTI</li>
+</ol>
+<p>runtime type information，这个概念,java已经实现,  java 允许使用类或对象的类型信息，在运行的时候。</p>
+<ol>
+<li>RTTI可以做什么</li>
+</ol>
+<p>RTTI可以解决，例如 运行时转换成正确的类型。</p>
+<ol>
+<li>传统的RTTI和反射由什么区别</li>
+</ol>
+<p>RTTI有三种使用方式，</p>
+<p>1.（TYPE） 类型转换   2. 获得Class对象，进行操作 3. instanceof </p>
+<p> 而 relection 使用 Class类和java.lang.relection.*  进行一系列操作,</p>
+<h2 id="Skeleton"><a href="#Skeleton" class="headerlink" title="Skeleton"></a>Skeleton</h2><h3 id="为什么需要RTTI"><a href="#为什么需要RTTI" class="headerlink" title="为什么需要RTTI"></a>为什么需要RTTI</h3><p><code>运行时,识别对象的类型</code> : 通过<code>List&lt;Shape&gt;</code> 放入不同对象,来说明, 虽然泛型会磨掉具体类型,以Object放入List中,由于RTTI的存在, 可以确定对象的类型,使得对象不丢失类型,正常的取出来.</p>
+<h3 id="Class对象"><a href="#Class对象" class="headerlink" title="Class对象"></a>Class对象</h3><p>每一个类都可以有且只有一个Class对象,获取方式</p>
+<p><code>Class.forName(&quot;className&quot;)</code></p>
+<p>也可以是literal </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">java.lang.String.class</div><div class="line">Shape.class</div></pre></td></tr></table></figure>
+<p>Class 对象可以泛化,</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Class&lt;String&gt; c = Class.forName(&quot;java.lang.String&quot;);</div></pre></td></tr></table></figure>
+<p><em>泛化可以用于编译时检查</em>,确保使用正确类型的Class对象.</p>
+<p>当然还可以使用通配符</p>
+<p>可以用<code>Class&lt;String&gt;.cast()</code> 进行转型,不过很少人用.</p>
+<p>关于Class创建的过程有以下三个步骤</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">1. 加载   寻找class文件,加载到内存中</div><div class="line">2. 链接   检查字节码,给静态变量分配空间</div><div class="line">3. 初始化  执行静态初始化器和静态初始化块</div></pre></td></tr></table></figure>
+<h3 id="类型转换前先做检查"><a href="#类型转换前先做检查" class="headerlink" title="类型转换前先做检查"></a>类型转换前先做检查</h3><p>这里举了一个<code>creater</code>和<code>counter</code>的例子</p>
+<p>即 随机创建一些宠物, 并对宠物按照类型进行统计.</p>
+<p>优化分几个阶段:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">1. 创建一个creater的抽象类, 继承抽象类, 把所有宠物的class对象用classForName的方式放到 Namecreater里</div><div class="line">   最后用instanceof按照顺序进行counter</div><div class="line">2. 用.class的方式, 重写了creater, 并且创建了一个工具类Pets 使用这个final 静态creater</div><div class="line">   最后用instanceof方式进行counter</div><div class="line">3. 修改counter, 使用Class&lt;? extends Pet&gt;, HashMap,对随机宠物进行统计, 并且 完全使用工具类Pets 来生成随机 宠物数组.</div><div class="line">4.  修改counter为TypeCounter, 即按照继承关系进行统计.</div><div class="line"></div><div class="line">总结: 工具类做creater比较不错, creater用.class,方便检查,   统计用Class对象比较好.  可以考虑继承统计.</div></pre></td></tr></table></figure>
+<h3 id="注册工厂"><a href="#注册工厂" class="headerlink" title="注册工厂"></a>注册工厂</h3><p>bruce提出了一个问题, 如果继承关系中, 出了一种新的Pet, 想随机创建, 有两个办法</p>
+<ol>
+<li>在creater中 添加这个类, 可是 如果creater已经有了一些继承关系, 这可能会出问题.(我不太明白是什么问题)</li>
+<li>如果在新的Pet中, 添加一段静态初始化块,  在块里对creater的List 添加自身的.class文件.  会遇到鸡生蛋的问题.(就是在创建这个对象之前, 不会调用这个对象,就不会加载这个静态初始化代码,  就不能创建本对象)</li>
+</ol>
+<p>一个推荐的做法,是把List 放到继承关系的基类中, 那么修改起来会比较方便.子类都要实现自己的内部静态工厂类,(实现Factory<t>) </t></p>
+<p>我理解这样做的好处, 必Class的newInstance可靠,因为有的Class可能没有默认构造器.</p>
+<h3 id="instanceof与Class的等价性"><a href="#instanceof与Class的等价性" class="headerlink" title="instanceof与Class的等价性"></a>instanceof与Class的等价性</h3><p><code>obj instanceof ClassName</code>和 <code>ClassObject.isInstance(obj)</code>  是等价的.</p>
+<p>但是Class对象 进行== 和 equals  是直接比较值,  不会判断是否是继承.</p>
+<h3 id="反射"><a href="#反射" class="headerlink" title="反射"></a>反射</h3><p>java.lang.relection 和Class对象 配合使用, 例如 <code>getFields</code>,  <code>getConstructors</code> , <code>getMethods</code> .</p>
+<h3 id="动态代理"><a href="#动态代理" class="headerlink" title="动态代理"></a>动态代理</h3><p>动态代理可以解决很多问题, 相比普通的代理模式, 代理类 不用写重复的代码.被代理的方法需要是接口.</p>
+<p>另外动态代理还可以处理混型(mixins)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// DynamicProxyTest.java</span></div><div class="line"><span class="keyword">import</span> java.lang.reflect.Proxy;</div><div class="line"><span class="keyword">import</span> java.lang.reflect.Method;</div><div class="line"><span class="keyword">import</span> java.lang.reflect.InvocationHandler;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Shape</span> </span>&#123;</div><div class="line">  <span class="function"><span class="keyword">void</span> <span class="title">draw</span><span class="params">()</span></span>;</div><div class="line">  <span class="function"><span class="keyword">void</span> <span class="title">show</span><span class="params">()</span></span>;</div><div class="line">&#125;</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Circle</span> <span class="keyword">implements</span> <span class="title">Shape</span> </span>&#123;</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">draw</span><span class="params">()</span> </span>&#123;</div><div class="line">    System.out.println(<span class="string">"draw"</span>);</div><div class="line">  &#125;</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">show</span><span class="params">()</span> </span>&#123;</div><div class="line">    System.out.println(<span class="string">"show"</span>);</div><div class="line">  &#125;</div><div class="line">  <span class="function"><span class="keyword">void</span> <span class="title">runCircle</span><span class="params">()</span> </span>&#123;</div><div class="line">    System.out.println(<span class="string">"run circle"</span>);</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">DynamicProxyCircle</span> <span class="keyword">implements</span> <span class="title">InvocationHandler</span> </span>&#123;</div><div class="line">  <span class="keyword">private</span> <span class="keyword">static</span> Object proxied;</div><div class="line">  DynamicProxyCircle(Object proxied) &#123;</div><div class="line">    <span class="keyword">this</span>.proxied = proxied;</div><div class="line">  &#125;</div><div class="line">  <span class="meta">@Override</span></div><div class="line">  <span class="function"><span class="keyword">public</span> Object <span class="title">invoke</span><span class="params">(Object proxy, Method method, Object[] args)</span> <span class="keyword">throws</span> Exception</span>&#123;</div><div class="line">    <span class="keyword">return</span> method.invoke(proxied,args);</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DynamicProxyTest</span> </span>&#123;</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</div><div class="line">    Object proxy = Proxy.newProxyInstance(</div><div class="line">    	Shape.class.getClassLoader(),</div><div class="line">      	<span class="keyword">new</span> Class[]&#123; Shape.class&#125;,</div><div class="line">      	<span class="keyword">new</span> DynamicProxyCircle(<span class="keyword">new</span> Circle())</div><div class="line">    	);</div><div class="line">    Shape s = (Shape)proxy;</div><div class="line">    s.draw();</div><div class="line">    s.show();</div><div class="line">    <span class="comment">//s.runCircle();</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="空对象"><a href="#空对象" class="headerlink" title="空对象"></a>空对象</h3><p>空对象可以部分解决,重要判断空指针的问题, 并且在一些对象情况下, 可以预占, 并且不用反复构造空对象.</p>
+<p>使用Null 接口, 作为标记接口, 动态代理,对象的方式来生成空对象.</p>
+<h3 id="接口和类型信息"><a href="#接口和类型信息" class="headerlink" title="接口和类型信息"></a>接口和类型信息</h3><p><code>getDeclareMethod</code>  可以获得一些方法, 并且用<code>javap</code>  可以反编译出class的所有方法,并得知class的名称.</p>
+<p>通过methods的setAccessible(true) 就可以使用private方法.</p>
+<p>包括内部类, 匿名类,静态内部类的private方法,都可以定位并使用.</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>RTTI和反射 非常有用, 可以在继承中解决很多问题, 但是有时候不用专门使用反射或者RTTI, 例如 乐器的继承关系里,</p>
+<p>如果Wind 这类乐器需要 clear口水, 可以在client的地方 判断类型,专门处理,  也可以加一个prepare的方法 加到基类里, 让每个乐器都执行 prepare, 只是各自的实现不同.</p>
+<h2 id="我的总结"><a href="#我的总结" class="headerlink" title="我的总结"></a>我的总结</h2><ol>
+<li>掌握 Class、instanceof、reflect的一些用法</li>
+<li>类型统计(工厂模式,递归统计, creater和counter的写法)</li>
+<li>什么时候需要反射，什么时候需要动态代理（避免重复代码，需要统计调用次数，需要hook，需要mixins）</li>
+<li>Class对象比较是不考虑继承的</li>
+<li>空对象场景，class的安全性</li>
+<li>避免滥用RTTI和反射</li>
+</ol>
+<h2 id="Read-More"><a href="#Read-More" class="headerlink" title="Read More"></a>Read More</h2><p>  <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/reflection/proxy.html" target="_blank" rel="external">Dynamic Proxy Classes</a>（Oracle Document）</p>
+<p>​    reflect类库</p>
+<p>​    class 类库   </p>
+<h2 id="END"><a href="#END" class="headerlink" title="END"></a>END</h2>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
   <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/26/install-angular-cli-on-win10/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -337,36 +538,18 @@
 
       
         
-          
-            <h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>最近开始学习angular, 也可以叫angular2, 当前版本可能是4.X.</p>
+          <h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>最近开始学习angular, 也可以叫angular2, 当前版本可能是4.X.</p>
 <p>按照大漠穷秋的视频进行学习.</p>
 <p>对angular有了一个初步的了解. 第一步是快速上手, </p>
 <p>由于我的是win10环境, 先安装<code>nodejs</code>, <code>git for windows</code>,<code>python3</code></p>
 <h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>安装angular-cli的时候还是遇到一些报错.</p>
-<p>大漠的建议是,</p>
-<ol>
-<li>搭建一个梯子, 然后用<code>npm proxy</code> 安装 angular-cli.</li>
-<li>ppt中还提出 windows要安装visual stutio.</li>
-<li>指出 <code>cnpm</code>安装会遇到结构不正确,无法使用的问题.<br>执行<br><code>npm install -g angular-cli</code></li>
-</ol>
-<h2 id="踩坑过程"><a href="#踩坑过程" class="headerlink" title="踩坑过程"></a>踩坑过程</h2><p>我当然直接执行了 <code>npm install -g angular-cli</code>  有提示指出包名已经修改,并且卡了很久.</p>
-<p>后来又提示python找不到, 原来是不支持python3.</p>
-<p>于是下载python2 进行设置.</p>
-<p>后面继续提示 提示node-sass 网络连接不上</p>
-<p>执行`cnpm install -g node-sass</p>
-<p>后面又遇到下载nodejs的 header文件.  网络不太好可能还是要翻墙.</p>
-<p>感觉很郁闷. 而且想到后面windows</p>
-<p>于是就前往<code>github</code>上看看</p>
-<p>并且angular-cli github上面 只是简单说</p>
-<p><code>npm install -g @angular/cli</code></p>
-<p>##正确方法</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">#管理员权限打开cmd</div><div class="line"></div><div class="line">#安装cnpm</div><div class="line">npm install -g cnpm --registry=https://registry.npm.taobao.org</div><div class="line">#设置源</div><div class="line">npm config set registry https://registry.npm.taobao.org/</div><div class="line">#安装node-gyp</div><div class="line">cnpm install -g node-gyp</div><div class="line">#安装window编译工具</div><div class="line">cnpm install --g windows-build-tools</div><div class="line">#设置sass镜像</div><div class="line">npm config set sass_binary_site https://npm.taobao.org/mirrors/node-sass/</div><div class="line">#安装node-sass</div><div class="line">cnpm install -g node-sass</div><div class="line"></div><div class="line">npm install -g @angular/cli</div></pre></td></tr></table></figure>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://github.com/lmk123/blog/issues/28" target="_blank" rel="external">node-sass安装</a></p>
-<p><a href="https://stackoverflow.com/questions/39743890/installing-angular-cli-on-windows-10" target="_blank" rel="external">win10安装angularcli</a></p>
-<p><a href="https://github.com/nodejs/node-gyp" target="_blank" rel="external">node-gyp之后安装的东东</a></p>
-<p>##END</p>
-
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/05/26/install-angular-cli-on-win10/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1052,7 +1235,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-count">6</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1061,7 +1244,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1070,7 +1253,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
