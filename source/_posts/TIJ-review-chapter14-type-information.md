@@ -3,6 +3,7 @@ title: TIJ review chapter14 type information
 date: 2017-06-09 11:03:15
 tags: [java,tij]
 categories: java
+toc: true
 ---
 # TIJ 复习 RTTI
 
