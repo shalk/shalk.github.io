@@ -267,7 +267,7 @@ Holder<? extends Shape> 与Holder\<Shape\> 有继承关系 例如
 
 这个时候可以采用
 
-< ? super Number>,  (也可以<? super T> 不可以 <T super Class>))
+< ? super Number>,  (也可以`<? super T>` 不可以`<T super Class>`))
 
 就是Number就是下界,里面放着Number和Number的父类,  那么setT()的时候 Integer属于这些类型的子类型,可以向上转型,类型检查没有问题.
 
@@ -284,7 +284,7 @@ ArrayList<? super Number> list = new ArrayList<Object>();
 
 Number  是 Object的子类
 
-List<? super Number> 是 ArrayList\<Object\>的父类
+`List<? super Number>` 是 `ArrayList<Object>`的父类
 
 ---
 
@@ -296,7 +296,7 @@ ArrayList<? extends Number> list = new ArrayList<Integer>();
 
 Number  是 Integer的父类
 
-ArrayList<? extends Number>  是 ArrayList\<Integer\> 父类
+ArrayList<? extends Number>  是`ArrayList<Integer>` 父类
 
 注意: 一般 基类可以接住 派生类
 
@@ -304,11 +304,11 @@ ArrayList<? extends Number>  是 ArrayList\<Integer\> 父类
 
 <?> 最后说是这个通配符.
 
-当类型不确定,代表要用泛型的时候, 或者\<String,?\> 
+当类型不确定,代表要用泛型的时候, 或者\<String,?> 
 
 这个通配符也不能用set方法
 
-小结: 只set 可以用 ? super ; 只get 用 ? extends  ; 都需要 用确切类型<XXX>
+小结: 只set 可以用 ? super ; 只get 用 ? extends  ; 都需要 用确切类型
 
 ## 踩坑指南和规避指南
 
@@ -317,7 +317,7 @@ ArrayList<? extends Number>  是 ArrayList\<Integer\> 父类
 1.  泛型会擦除, 里面都没有类型都是Object (T主动转型实际上没啥用)
 2.  8中基本类型不可以用泛型,可以用包装类
 3.  泛型的接口不能实现两个不同类型的
-4.  泛型参数不同重载没用foo1(Holder\<A> a) foo1(Holder\<B> b) 函数原型是一样的 会冲突
+4.  泛型参数不同重载没用`foo1(Holder<A>  a)` ,  `foo1(Holder<B>  b)` 函数原型是一样的 会冲突
 
 
 
@@ -406,7 +406,7 @@ public class MixinHandler implements InvocationHandler {
 
 稍微改了一下 编译通过了.
 
-自限定 class Y\<T extents Y\<T\>\> 
+自限定 `class Y <T extents Y<T>>` 
 
 ```
 class Node<T extends Node<T>> {
@@ -414,7 +414,7 @@ class Node<T extends Node<T>> {
 }
 ```
 
-继承Node的必须是 class Node1 implements Node\<Node1\> {}
+继承Node的必须是 `class Node1 implements Node<Node1> {}`
 
 要求继承泛型的参数必须是继承者自己.
 
