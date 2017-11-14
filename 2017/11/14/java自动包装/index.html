@@ -1,0 +1,162 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description"><title>java自动包装 | Shalk's Blog</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/6.0.0/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.2/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.2/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">java自动包装</h1><a id="logo" href="/.">Shalk's Blog</a><p class="description"></p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">java自动包装</h1><div class="post-meta">Nov 14, 2017<span> | </span><span class="category"><a href="/categories/java/">java</a></span><script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script><span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span><span> 阅读</span></span></div><div class="clear"><div id="toc" class="toc-article"><div class="toc-title">文章目录</div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#教程"><span class="toc-number">1.</span> <span class="toc-text">教程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#说明"><span class="toc-number">2.</span> <span class="toc-text">说明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JLS"><span class="toc-number">3.</span> <span class="toc-text">JLS</span></a></li></ol></div></div><div class="post-content"><p>java自动包装是1.5添加的一个增加特性，为了消除对这个魔法的疑惑，对官方的教程，说明以及规范进行翻译。看完这3部分就全明白了。</p>
+<h2 id="教程"><a href="#教程" class="headerlink" title="教程"></a>教程</h2><p>自动包装(<code>Autoboxing</code>)是一种java便编译器在基本类型和相应的对象包装类之间的约定。例如 把<code>int</code>转换成<code>Integer</code>, double转换成<code>Double</code> 等待。 如果是反向转换，被称为 解包装(<code>unboxing</code>)</p>
+<p>下面是最简单的自动包装的例子：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Character ch = <span class="string">'a'</span>;</div></pre></td></tr></table></figure>
+<p>本节下面的例子使用泛型。如果你不熟悉泛型的语法，可以看 <a href="https://docs.oracle.com/javase/tutorial/java/generics/index.html" target="_blank" rel="external">Generics (Updated)</a> 的章节。</p>
+<p>阅读如下代码:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">List&lt;Integer&gt; li = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; <span class="number">50</span>; i += <span class="number">2</span>)</div><div class="line">    li.add(i);</div></pre></td></tr></table></figure>
+<p>尽管你add的是基本类型<code>int</code> ，而不是<code>Integer</code>对象到<code>li</code>中, 代码编译成功。 由于<code>li</code>是<code>Integer</code> 对象的列表, 不是<code>int</code>的列表，你肯定会好奇为什么java 编译器不会产生 编译错误。 编译器不产生报错是因为它用<code>i</code>创建一个<code>Integer</code>对象上，并把这个对象添加到<code>li</code>。 因此，编译器在运行时把之前的代码转换成如下代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">List&lt;Integer&gt; li = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; <span class="number">50</span>; i += <span class="number">2</span>)</div><div class="line">    li.add(Integer.valueOf(i));</div></pre></td></tr></table></figure>
+<p>把基本类型（例如<code>int</code>) 转换成一个相应的包装对象类（<code>Integer</code>) 被称为autoboxing(自动包装)。Java编译器在以下情况对基本类型使用自动包装：</p>
+<ul>
+<li>传参时，把基本类型传递给一个方法，该方法预期接受的参数是相应的包装类。</li>
+<li>赋值时，把基本类型赋值给一个包装类变量。</li>
+</ul>
+<p>阅读如下代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">sumEven</span><span class="params">(List&lt;Integer&gt; li)</span> </span>&#123;</div><div class="line">    <span class="keyword">int</span> sum = <span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span> (Integer i: li)</div><div class="line">        <span class="keyword">if</span> (i % <span class="number">2</span> == <span class="number">0</span>)</div><div class="line">            sum += i;</div><div class="line">        <span class="keyword">return</span> sum;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>因为求余操作符（<code>%</code>) 和 一元加操作符（<code>+=</code>）把能作用于<code>Integer</code> 对象, 你可能想知道为什么java编译器不会产生该方法的报错。 这是因为它调用了<code>intValue</code>方法在运行时把<code>Integer</code>转换成<code>int</code>： </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">sumEven</span><span class="params">(List&lt;Integer&gt; li)</span> </span>&#123;</div><div class="line">    <span class="keyword">int</span> sum = <span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span> (Integer i : li)</div><div class="line">        <span class="keyword">if</span> (i.intValue() % <span class="number">2</span> == <span class="number">0</span>)</div><div class="line">            sum += i.intValue();</div><div class="line">        <span class="keyword">return</span> sum;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>把包装类对象（如<code>Integer</code>) 转换成相应的基本类型（<code>int</code>) 被称为解包装（unboxing）。 java编译器会在一下情况解包装一个包装类对象：</p>
+<ul>
+<li>传参时，把包装类传递给方法，该方法预期接受的参数是相应的基本类型。（操作符也是传参）</li>
+<li>赋值时，把变量赋值给相应基本类型。</li>
+</ul>
+<p>解包装的例子如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.util.ArrayList;</div><div class="line"><span class="keyword">import</span> java.util.List;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Unboxing</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        Integer i = <span class="keyword">new</span> Integer(-<span class="number">8</span>);</div><div class="line"></div><div class="line">        <span class="comment">// 1. Unboxing through method invocation</span></div><div class="line">        <span class="keyword">int</span> absVal = absoluteValue(i);</div><div class="line">        System.out.println(<span class="string">"absolute value of "</span> + i + <span class="string">" = "</span> + absVal);</div><div class="line"></div><div class="line">        List&lt;Double&gt; ld = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">        ld.add(<span class="number">3.1416</span>);    <span class="comment">// Π is autoboxed through method invocation.</span></div><div class="line"></div><div class="line">        <span class="comment">// 2. Unboxing through assignment</span></div><div class="line">        <span class="keyword">double</span> pi = ld.get(<span class="number">0</span>);</div><div class="line">        System.out.println(<span class="string">"pi = "</span> + pi);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">absoluteValue</span><span class="params">(<span class="keyword">int</span> i)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> (i &lt; <span class="number">0</span>) ? -i : i;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>程序打印如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">absolute value of -8 = 8</div><div class="line">pi = 3.1416</div></pre></td></tr></table></figure>
+<p>自动包装和解包装让开发写的代码更简洁，更容易阅读。下表列出了基本类型和相应包装类，用于java编译器进行自动包装和解包装：</p>
+<table>
+<thead>
+<tr>
+<th>Primitive type</th>
+<th>Wrapper class</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>boolean</td>
+<td>Boolean</td>
+</tr>
+<tr>
+<td>byte</td>
+<td>Byte</td>
+</tr>
+<tr>
+<td>char</td>
+<td>Character</td>
+</tr>
+<tr>
+<td>float</td>
+<td>Float</td>
+</tr>
+<tr>
+<td>int</td>
+<td>Integer</td>
+</tr>
+<tr>
+<td>long</td>
+<td>Long</td>
+</tr>
+<tr>
+<td>short</td>
+<td>Short</td>
+</tr>
+<tr>
+<td>double</td>
+<td>Double</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><p>Java程序员都知道，不能把 <code>int</code> 放入一个容器中。 容器只能存放对象引用，所以你需要包装基本类型为一个合适的包装类（<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Integer.html" target="_blank" rel="external"><code>Integer</code></a>就是int的合适包装类）。但你把对象放入容器中，你可以取到<code>Integer</code>;如果你需要<code>int</code>， 你需要解包<code>Integer</code>，使用<code>intValue</code>方法解包。所有的包装和解包装都是负担，把代码变的散乱。自动包装和解包装的特性可以自动化这个过程，并消除负担和代码散乱。</p>
+<p>以下例子解释了自动包装和解包装，并结合了<a href="https://docs.oracle.com/javase/8/docs/technotes/guides/language/generics.html" target="_blank" rel="external">泛型</a>和<a href="https://docs.oracle.com/javase/8/docs/technotes/guides/language/foreach.html" target="_blank" rel="external">for-each</a>循环一起演示。下面数10行代码，计算并打印了命令行单词按照字母顺序的频率表。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.util.*;</div><div class="line"></div><div class="line"><span class="comment">// Prints a frequency table of the words on the command line</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Frequency</span> </span>&#123;</div><div class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">      Map&lt;String, Integer&gt; m = <span class="keyword">new</span> TreeMap&lt;String, Integer&gt;();</div><div class="line">      <span class="keyword">for</span> (String word : args) &#123;</div><div class="line">          Integer freq = m.get(word);</div><div class="line">          m.put(word, (freq == <span class="keyword">null</span> ? <span class="number">1</span> : freq + <span class="number">1</span>));</div><div class="line">      &#125;</div><div class="line">      System.out.println(m);</div><div class="line">   &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">java Frequency <span class="keyword">if</span> it is to be it is up to me to <span class="keyword">do</span> the watusi</div><div class="line">&#123;be=<span class="number">1</span>, <span class="keyword">do</span>=<span class="number">1</span>, <span class="keyword">if</span>=<span class="number">1</span>, is=<span class="number">2</span>, it=<span class="number">2</span>, me=<span class="number">1</span>, the=<span class="number">1</span>, to=<span class="number">3</span>, up=<span class="number">1</span>, watusi=<span class="number">1</span>&#125;</div></pre></td></tr></table></figure>
+<p>这个程序首先声明了一个<code>String</code>到<code>Integer</code>的一个map， 把单词和单词出现的次数关联起来。然后迭代命令行的每一个单词。对于每一个单词，查询map中的单词。然后把对该单词修改后的条目放如map中。m.put的那一行既包含自动包装和解包装。为了计算单词关联的新的值，首先查看当前频率<code>freq</code>。 如果是<code>null</code>， 该单词是首次出现，就把1 放入map中。否则，就把之前出现的次数加1再放入map中。 但是你不能把<code>int</code>放入map中，也不能给<code>Integer</code>加1.  实际上发生的是这样： 为了给<code>freq</code>加1，会自动解包装，产生一个<code>int</code>类型的表达式进行计算。由于条件表达式的两个可选择表达式结果都是<code>int</code>类型，所以条件表达是本身也是<code>int</code>类型。为了把<code>int</code> 放入map中，会自动包装成一个<code>Integer</code>。</p>
+<p>所有这些魔法的结果使得你可以几乎忽略<code>int</code>和<code>Integer</code>，带着一些欺骗。一个<code>Integer</code>对象可以是<code>null</code>。如果你的程序尝试进行自动解包装<code>null</code>，会抛出<code>NullPointerException</code>的异常。操作符<code>==</code>对<code>Integer</code>表达式进行的是引用值比较，而int表达式是进行值相等比较。最后，在包装和解包装有一些性能代价，即使这是自动的。</p>
+<p>下面是另一个自动包装和解包装的程序示例。这是一个静态工厂，参数是<code>int</code>数组，返回一个容纳Integer的List，底层用数组实现。以下数十行代码的方法提供了一个完全丰富的List接口基于<code>int</code>数组。所有对list的修改都会作用到数组上，反之亦然。 有备注的两行是使用自动包装和解包装：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// List adapter for primitive int array</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> List&lt;Integer&gt; <span class="title">asList</span><span class="params">(<span class="keyword">final</span> <span class="keyword">int</span>[] a)</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">new</span> AbstractList&lt;Integer&gt;() &#123;</div><div class="line">        <span class="function"><span class="keyword">public</span> Integer <span class="title">get</span><span class="params">(<span class="keyword">int</span> i)</span> </span>&#123; <span class="keyword">return</span> a[i]; &#125;</div><div class="line">        <span class="comment">// Throws NullPointerException if val == null</span></div><div class="line">        <span class="function"><span class="keyword">public</span> Integer <span class="title">set</span><span class="params">(<span class="keyword">int</span> i, Integer val)</span> </span>&#123;</div><div class="line">            Integer oldVal = a[i];  <span class="comment">//  autoboxing </span></div><div class="line">            a[i] = val;  <span class="comment">// unboxing</span></div><div class="line">            <span class="keyword">return</span> oldVal;</div><div class="line">        &#125;</div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">size</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> a.length; &#125;</div><div class="line">    &#125;;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>产生的列表的性能很低，因为每一次<code>get</code>和<code>set</code>操作都会进行包装和解包装。对于偶尔使用已经足够快了，但对于性能重要的内部循环中使用它是愚蠢的。</p>
+<p>所以什么时候使用自动包装和解包装？ 只有在出现基本类型和引用类型不匹配障碍的时候使用它，例如 把数字放到容器中。但不适合把自动包装和解包装用于科学计算或者其他性能敏感的数值相关的代码。 <code>Integer</code>不是用来替代<code>int</code>的;自动包装和解包装模糊了基本类型和引用类型的区别，但不会消除区别。</p>
+<hr>
+<h2 id="JLS"><a href="#JLS" class="headerlink" title="JLS"></a>JLS</h2><p>这个部分不翻译了，比较简单；</p>
+<p>值得注意的部分是，对常量进行自动包装时，比较小的int（-128～127）、char（\u0000~ \u007f）和boolean(true,false)的常量在自动包装之后，会产生相同（引用值相同）的包装对象。 这可能是通过缓存实现的，同时对于较大值技术上无法实现。</p>
+<p>5.1.7. Boxing Conversion</p>
+<p>Boxing conversion converts expressions of primitive type to corresponding expressions of reference type. Specifically, the following nine conversions are called the <em>boxing conversions</em>:</p>
+<ul>
+<li><p>From type <code>boolean</code> to type <code>Boolean</code></p>
+</li>
+<li><p>From type <code>byte</code> to type <code>Byte</code></p>
+</li>
+<li><p>From type <code>short</code> to type <code>Short</code></p>
+</li>
+<li><p>From type <code>char</code> to type <code>Character</code></p>
+</li>
+<li><p>From type <code>int</code> to type <code>Integer</code></p>
+</li>
+<li><p>From type <code>long</code> to type <code>Long</code></p>
+</li>
+<li><p>From type <code>float</code> to type <code>Float</code></p>
+</li>
+<li><p>From type <code>double</code> to type <code>Double</code></p>
+</li>
+<li><p>From the null type to the null type</p>
+<p>This rule is necessary because the conditional operator (<a href="https://docs.oracle.com/javase/specs/jls/se8/html/jls-15.html#jls-15.25" target="_blank" rel="external">§15.25</a>) applies boxing conversion to the types of its operands, and uses the result in further calculations.</p>
+</li>
+</ul>
+<p>At run time, boxing conversion proceeds as follows:</p>
+<ul>
+<li>If <code>p</code> is a value of type <code>boolean</code>, then boxing conversion converts <code>p</code> into a reference <code>r</code> of class and type <code>Boolean</code>, such that <code>r.booleanValue() == p</code></li>
+<li>If <code>p</code> is a value of type <code>byte</code>, then boxing conversion converts <code>p</code> into a reference <code>r</code> of class and type <code>Byte</code>, such that <code>r.byteValue() == p</code></li>
+<li>If <code>p</code> is a value of type <code>char</code>, then boxing conversion converts <code>p</code> into a reference <code>r</code> of class and type <code>Character</code>, such that <code>r.charValue() == p</code></li>
+<li>If <code>p</code> is a value of type <code>short</code>, then boxing conversion converts <code>p</code> into a reference <code>r</code> of class and type <code>Short</code>, such that <code>r.shortValue() == p</code></li>
+<li>If <code>p</code> is a value of type <code>int</code>, then boxing conversion converts <code>p</code> into a reference <code>r</code> of class and type <code>Integer</code>, such that <code>r.intValue() == p</code></li>
+<li>If <code>p</code> is a value of type <code>long</code>, then boxing conversion converts <code>p</code> into a reference <code>r</code> of class and type <code>Long</code>, such that <code>r.longValue() == p</code></li>
+<li>If <code>p</code> is a value of type <code>float</code> then:<ul>
+<li>If <code>p</code> is not NaN, then boxing conversion converts <code>p</code> into a reference <code>r</code> of class and type <code>Float</code>, such that <code>r.floatValue()</code> evaluates to <code>p</code></li>
+<li>Otherwise, boxing conversion converts <code>p</code> into a reference <code>r</code> of class and type <code>Float</code> such that <code>r.isNaN()</code> evaluates to <code>true</code></li>
+</ul>
+</li>
+<li>If <code>p</code> is a value of type <code>double</code>, then:<ul>
+<li>If <code>p</code> is not NaN, boxing conversion converts <code>p</code> into a reference <code>r</code> of class and type <code>Double</code>, such that <code>r.doubleValue()</code> evaluates to <code>p</code></li>
+<li>Otherwise, boxing conversion converts <code>p</code> into a reference <code>r</code> of class and type <code>Double</code> such that <code>r.isNaN()</code> evaluates to <code>true</code></li>
+</ul>
+</li>
+<li>If <code>p</code> is a value of any other type, boxing conversion is equivalent to an identity conversion (<a href="https://docs.oracle.com/javase/specs/jls/se8/html/jls-5.html#jls-5.1.1" target="_blank" rel="external">§5.1.1</a>).</li>
+</ul>
+<p>If the value <code>p</code> being boxed is an integer literal of type <code>int</code> between <code>-128</code> and <code>127</code> inclusive (<a href="https://docs.oracle.com/javase/specs/jls/se8/html/jls-3.html#jls-3.10.1" target="_blank" rel="external">§3.10.1</a>), or the boolean literal <code>true</code> or <code>false</code> (<a href="https://docs.oracle.com/javase/specs/jls/se8/html/jls-3.html#jls-3.10.3" target="_blank" rel="external">§3.10.3</a>), or a character literal between <code>&#39;\u0000&#39;</code> and <code>&#39;\u007f&#39;</code> inclusive (<a href="https://docs.oracle.com/javase/specs/jls/se8/html/jls-3.html#jls-3.10.4" target="_blank" rel="external">§3.10.4</a>), then let <code>a</code> and <code>b</code> be the results of any two boxing conversions of <code>p</code>. It is always the case that <code>a</code> <code>==</code> <code>b</code>.</p>
+<p>Ideally, boxing a primitive value would always yield an identical reference. In practice, this may not be feasible using existing implementation techniques. The rule above is a pragmatic compromise, requiring that certain common values always be boxed into indistinguishable objects. The implementation may cache these, lazily or eagerly. For other values, the rule disallows any assumptions about the identity of the boxed values on the programmer’s part. This allows (but does not require) sharing of some or all of these references. Notice that integer literals of type <code>long</code> are allowed, but not required, to be shared.</p>
+<p>This ensures that in most common cases, the behavior will be the desired one, without imposing an undue performance penalty, especially on small devices. Less memory-limited implementations might, for example, cache all <code>char</code> and <code>short</code> values, as well as <code>int</code> and <code>long</code> values in the range of -32K to +32K.</p>
+<p>A boxing conversion may result in an <code>OutOfMemoryError</code> if a new instance of one of the wrapper classes (<code>Boolean</code>, <code>Byte</code>, <code>Character</code>, <code>Short</code>, <code>Integer</code>, <code>Long</code>, <code>Float</code>, or <code>Double</code>) needs to be allocated and insufficient storage is available.</p>
+<p>5.1.8. Unboxing Conversion</p>
+<p>Unboxing conversion converts expressions of reference type to corresponding expressions of primitive type. Specifically, the following eight conversions are called the <em>unboxing conversions</em>:</p>
+<ul>
+<li>From type <code>Boolean</code> to type <code>boolean</code></li>
+<li>From type <code>Byte</code> to type <code>byte</code></li>
+<li>From type <code>Short</code> to type <code>short</code></li>
+<li>From type <code>Character</code> to type <code>char</code></li>
+<li>From type <code>Integer</code> to type <code>int</code></li>
+<li>From type <code>Long</code> to type <code>long</code></li>
+<li>From type <code>Float</code> to type <code>float</code></li>
+<li>From type <code>Double</code> to type <code>double</code></li>
+</ul>
+<p>At run time, unboxing conversion proceeds as follows:</p>
+<ul>
+<li>If <code>r</code> is a reference of type <code>Boolean</code>, then unboxing conversion converts <code>r</code> into <code>r.booleanValue()</code></li>
+<li>If <code>r</code> is a reference of type <code>Byte</code>, then unboxing conversion converts <code>r</code> into <code>r.byteValue()</code></li>
+<li>If <code>r</code> is a reference of type <code>Character</code>, then unboxing conversion converts <code>r</code> into <code>r.charValue()</code></li>
+<li>If <code>r</code> is a reference of type <code>Short</code>, then unboxing conversion converts <code>r</code> into <code>r.shortValue()</code></li>
+<li>If <code>r</code> is a reference of type <code>Integer</code>, then unboxing conversion converts <code>r</code> into <code>r.intValue()</code></li>
+<li>If <code>r</code> is a reference of type <code>Long</code>, then unboxing conversion converts <code>r</code> into <code>r.longValue()</code></li>
+<li>If <code>r</code> is a reference of type <code>Float</code>, unboxing conversion converts <code>r</code> into <code>r.floatValue()</code></li>
+<li>If <code>r</code> is a reference of type <code>Double</code>, then unboxing conversion converts <code>r</code> into <code>r.doubleValue()</code></li>
+<li>If <code>r</code> is <code>null</code>, unboxing conversion throws a <code>NullPointerException</code></li>
+</ul>
+<p>A type is said to be <em>convertible to a numeric type</em> if it is a numeric type (<a href="https://docs.oracle.com/javase/specs/jls/se8/html/jls-4.html#jls-4.2" target="_blank" rel="external">§4.2</a>), or it is a reference type that may be converted to a numeric type by unboxing conversion.</p>
+<p>A type is said to be <em>convertible to an integral type</em> if it is an integral type, or it is a reference type that may be converted to an integral type by unboxing conversion.</p>
+<p>参考</p>
+<p><a href="https://docs.oracle.com/javase/tutorial/java/data/autoboxing.html" target="_blank" rel="external">https://docs.oracle.com/javase/tutorial/java/data/autoboxing.html</a></p>
+<p><a href="https://docs.oracle.com/javase/8/docs/technotes/guides/language/autoboxing.html" target="_blank" rel="external">https://docs.oracle.com/javase/8/docs/technotes/guides/language/autoboxing.html</a> (Enhancements in Java SE 5.0)</p>
+<p><a href="https://docs.oracle.com/javase/specs/jls/se8/html/jls-5.html#jls-5.1.8" target="_blank" rel="external">https://docs.oracle.com/javase/specs/jls/se8/html/jls-5.html#jls-5.1.8</a></p>
+<p><a href="https://docs.oracle.com/javase/specs/jls/se8/html/jls-5.html#jls-5.1.7" target="_blank" rel="external">https://docs.oracle.com/javase/specs/jls/se8/html/jls-5.html#jls-5.1.7</a></p>
+</div><script type="text/javascript" src="/js/share.js?v=0.0.0" async></script><a data-url="https://shalk.github.io/2017/11/14/java自动包装/" data-id="cj9zdkvf5000hgcvinlqcylm6" class="article-share-link">分享</a><div class="tags"><a href="/tags/java/">java</a></div><div class="post-nav"><a href="/2017/11/14/TIJ-review-chapter16-arrays/" class="next">TIJ review chapter16 arrays</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank" class="search-form"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="https://shalk.github.io"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/check-mk/">check_mk</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/kubernetes/">kubernetes</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/github/" style="font-size: 15px;">github</a> <a href="/tags/java/" style="font-size: 15px;">java</a> <a href="/tags/check-mk/" style="font-size: 15px;">check_mk</a> <a href="/tags/monitor/" style="font-size: 15px;">monitor</a> <a href="/tags/hexo/" style="font-size: 15px;">hexo</a> <a href="/tags/tij/" style="font-size: 15px;">tij</a> <a href="/tags/blog/" style="font-size: 15px;">blog</a> <a href="/tags/angular/" style="font-size: 15px;">angular</a> <a href="/tags/kubernetes/" style="font-size: 15px;">kubernetes</a> <a href="/tags/docker/" style="font-size: 15px;">docker</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/11/14/java自动包装/">java自动包装</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/14/TIJ-review-chapter16-arrays/">TIJ review chapter16 arrays</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/30/kubernetes-note-1/">kubernetes note 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/22/TIJ-review-chapter15-generic/">TIJ review chapter15 generic</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/09/TIJ-review-chapter14-type-information/">TIJ review chapter14 type information</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/26/install-angular-cli-on-win10/">install angular-cli on win10</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/26/the-way-to-go-notes-1/">the way to go notes 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/24/checkmk_flexible_notifications/">灵活的通知</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/20/deploy-hexo/">deploy hexo</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/19/hello-world/">Hello World</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="http://www.example1.com/" title="site-name1" target="_blank">site-name1</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2017 <a href="/." rel="nofollow">Shalk's Blog.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/3.0.47/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/3.0.47/jquery.fancybox.min.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
