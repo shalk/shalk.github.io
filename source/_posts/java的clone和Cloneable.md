@@ -120,10 +120,14 @@ s2:Student{name='tom', age=23}
 
 由于java在override的协变特性，即返回值可以是基类的子类。 
 
+
+
     @Override
     public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
+
+
 改成
 
 ```
