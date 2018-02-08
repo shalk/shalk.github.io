@@ -1,87 +1,48 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description"><title>TIJ review chapter14 type information | Shalk's Blog</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/6.0.0/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.2/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.2/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">TIJ review chapter14 type information</h1><a id="logo" href="/.">Shalk's Blog</a><p class="description"></p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">TIJ review chapter14 type information</h1><div class="post-meta">Jun 9, 2017<span> | </span><span class="category"><a href="/categories/java/">java</a></span><script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script><span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span><span> 阅读</span></span></div><a data-disqus-identifier="2017/06/09/TIJ-review-chapter14-type-information/" href="/2017/06/09/TIJ-review-chapter14-type-information/#disqus_thread" class="disqus-comment-count"></a><div class="clear"><div id="toc" class="toc-article"><div class="toc-title">文章目录</div><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#TIJ-复习-RTTI"><span class="toc-number">1.</span> <span class="toc-text">TIJ 复习 RTTI</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#QA"><span class="toc-number">1.1.</span> <span class="toc-text">QA</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Skeleton"><span class="toc-number">1.2.</span> <span class="toc-text">Skeleton</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#为什么需要RTTI"><span class="toc-number">1.2.1.</span> <span class="toc-text">为什么需要RTTI</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Class对象"><span class="toc-number">1.2.2.</span> <span class="toc-text">Class对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#类型转换前先做检查"><span class="toc-number">1.2.3.</span> <span class="toc-text">类型转换前先做检查</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#注册工厂"><span class="toc-number">1.2.4.</span> <span class="toc-text">注册工厂</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#instanceof与Class的等价性"><span class="toc-number">1.2.5.</span> <span class="toc-text">instanceof与Class的等价性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#反射"><span class="toc-number">1.2.6.</span> <span class="toc-text">反射</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#动态代理"><span class="toc-number">1.2.7.</span> <span class="toc-text">动态代理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#空对象"><span class="toc-number">1.2.8.</span> <span class="toc-text">空对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#接口和类型信息"><span class="toc-number">1.2.9.</span> <span class="toc-text">接口和类型信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#总结"><span class="toc-number">1.2.10.</span> <span class="toc-text">总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#我的总结"><span class="toc-number">1.3.</span> <span class="toc-text">我的总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Read-More"><span class="toc-number">1.4.</span> <span class="toc-text">Read More</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#END"><span class="toc-number">1.5.</span> <span class="toc-text">END</span></a></li></ol></li></ol></div></div><div class="post-content"><h1 id="TIJ-复习-RTTI"><a href="#TIJ-复习-RTTI" class="headerlink" title="TIJ 复习 RTTI"></a>TIJ 复习 RTTI</h1><h2 id="QA"><a href="#QA" class="headerlink" title="QA"></a>QA</h2><ol>
-<li>什么是RTTI</li>
-</ol>
-<p>runtime type information，这个概念,java已经实现,  java 允许使用类或对象的类型信息，在运行的时候。</p>
-<ol>
-<li>RTTI可以做什么</li>
-</ol>
-<p>RTTI可以解决，例如 运行时转换成正确的类型。</p>
-<ol>
-<li>传统的RTTI和反射由什么区别</li>
-</ol>
-<p>RTTI有三种使用方式，</p>
-<p>1.（TYPE） 类型转换   2. 获得Class对象，进行操作 3. instanceof </p>
-<p> 而 relection 使用 Class类和java.lang.relection.*  进行一系列操作,</p>
-<h2 id="Skeleton"><a href="#Skeleton" class="headerlink" title="Skeleton"></a>Skeleton</h2><h3 id="为什么需要RTTI"><a href="#为什么需要RTTI" class="headerlink" title="为什么需要RTTI"></a>为什么需要RTTI</h3><p><code>运行时,识别对象的类型</code> : 通过<code>List&lt;Shape&gt;</code> 放入不同对象,来说明, 虽然泛型会磨掉具体类型,以Object放入List中,由于RTTI的存在, 可以确定对象的类型,使得对象不丢失类型,正常的取出来.</p>
-<h3 id="Class对象"><a href="#Class对象" class="headerlink" title="Class对象"></a>Class对象</h3><p>每一个类都可以有且只有一个Class对象,获取方式</p>
-<p><code>Class.forName(&quot;className&quot;)</code></p>
-<p>也可以是literal </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">java.lang.String.class</div><div class="line">Shape.class</div></pre></td></tr></table></figure>
-<p>Class 对象可以泛化,</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Class&lt;String&gt; c = Class.forName(&quot;java.lang.String&quot;);</div></pre></td></tr></table></figure>
-<p><em>泛化可以用于编译时检查</em>,确保使用正确类型的Class对象.</p>
-<p>当然还可以使用通配符</p>
-<p>可以用<code>Class&lt;String&gt;.cast()</code> 进行转型,不过很少人用.</p>
-<p>关于Class创建的过程有以下三个步骤</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">1. 加载   寻找class文件,加载到内存中</div><div class="line">2. 链接   检查字节码,给静态变量分配空间</div><div class="line">3. 初始化  执行静态初始化器和静态初始化块</div></pre></td></tr></table></figure>
-<h3 id="类型转换前先做检查"><a href="#类型转换前先做检查" class="headerlink" title="类型转换前先做检查"></a>类型转换前先做检查</h3><p>这里举了一个<code>creater</code>和<code>counter</code>的例子</p>
-<p>即 随机创建一些宠物, 并对宠物按照类型进行统计.</p>
-<p>优化分几个阶段:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">1. 创建一个creater的抽象类, 继承抽象类, 把所有宠物的class对象用classForName的方式放到 Namecreater里</div><div class="line">   最后用instanceof按照顺序进行counter</div><div class="line">2. 用.class的方式, 重写了creater, 并且创建了一个工具类Pets 使用这个final 静态creater</div><div class="line">   最后用instanceof方式进行counter</div><div class="line">3. 修改counter, 使用Class&lt;? extends Pet&gt;, HashMap,对随机宠物进行统计, 并且 完全使用工具类Pets 来生成随机 宠物数组.</div><div class="line">4.  修改counter为TypeCounter, 即按照继承关系进行统计.</div><div class="line"></div><div class="line">总结: 工具类做creater比较不错, creater用.class,方便检查,   统计用Class对象比较好.  可以考虑继承统计.</div></pre></td></tr></table></figure>
-<h3 id="注册工厂"><a href="#注册工厂" class="headerlink" title="注册工厂"></a>注册工厂</h3><p>bruce提出了一个问题, 如果继承关系中, 出了一种新的Pet, 想随机创建, 有两个办法</p>
-<ol>
-<li>在creater中 添加这个类, 可是 如果creater已经有了一些继承关系, 这可能会出问题.(我不太明白是什么问题)</li>
-<li>如果在新的Pet中, 添加一段静态初始化块,  在块里对creater的List 添加自身的.class文件.  会遇到鸡生蛋的问题.(就是在创建这个对象之前, 不会调用这个对象,就不会加载这个静态初始化代码,  就不能创建本对象)</li>
-</ol>
-<p>一个推荐的做法,是把List 放到继承关系的基类中, 那么修改起来会比较方便.子类都要实现自己的内部静态工厂类,(实现Factory<t>) </t></p>
-<p>我理解这样做的好处, 必Class的newInstance可靠,因为有的Class可能没有默认构造器.</p>
-<h3 id="instanceof与Class的等价性"><a href="#instanceof与Class的等价性" class="headerlink" title="instanceof与Class的等价性"></a>instanceof与Class的等价性</h3><p><code>obj instanceof ClassName</code>和 <code>ClassObject.isInstance(obj)</code>  是等价的.</p>
-<p>但是Class对象 进行== 和 equals  是直接比较值,  不会判断是否是继承.</p>
-<h3 id="反射"><a href="#反射" class="headerlink" title="反射"></a>反射</h3><p>java.lang.relection 和Class对象 配合使用, 例如 <code>getFields</code>,  <code>getConstructors</code> , <code>getMethods</code> .</p>
-<h3 id="动态代理"><a href="#动态代理" class="headerlink" title="动态代理"></a>动态代理</h3><p>动态代理可以解决很多问题, 相比普通的代理模式, 代理类 不用写重复的代码.被代理的方法需要是接口.</p>
-<p>另外动态代理还可以处理混型(mixins)</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// DynamicProxyTest.java</span></div><div class="line"><span class="keyword">import</span> java.lang.reflect.Proxy;</div><div class="line"><span class="keyword">import</span> java.lang.reflect.Method;</div><div class="line"><span class="keyword">import</span> java.lang.reflect.InvocationHandler;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Shape</span> </span>&#123;</div><div class="line">  <span class="function"><span class="keyword">void</span> <span class="title">draw</span><span class="params">()</span></span>;</div><div class="line">  <span class="function"><span class="keyword">void</span> <span class="title">show</span><span class="params">()</span></span>;</div><div class="line">&#125;</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Circle</span> <span class="keyword">implements</span> <span class="title">Shape</span> </span>&#123;</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">draw</span><span class="params">()</span> </span>&#123;</div><div class="line">    System.out.println(<span class="string">"draw"</span>);</div><div class="line">  &#125;</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">show</span><span class="params">()</span> </span>&#123;</div><div class="line">    System.out.println(<span class="string">"show"</span>);</div><div class="line">  &#125;</div><div class="line">  <span class="function"><span class="keyword">void</span> <span class="title">runCircle</span><span class="params">()</span> </span>&#123;</div><div class="line">    System.out.println(<span class="string">"run circle"</span>);</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">DynamicProxyCircle</span> <span class="keyword">implements</span> <span class="title">InvocationHandler</span> </span>&#123;</div><div class="line">  <span class="keyword">private</span> <span class="keyword">static</span> Object proxied;</div><div class="line">  DynamicProxyCircle(Object proxied) &#123;</div><div class="line">    <span class="keyword">this</span>.proxied = proxied;</div><div class="line">  &#125;</div><div class="line">  <span class="meta">@Override</span></div><div class="line">  <span class="function"><span class="keyword">public</span> Object <span class="title">invoke</span><span class="params">(Object proxy, Method method, Object[] args)</span> <span class="keyword">throws</span> Exception</span>&#123;</div><div class="line">    <span class="keyword">return</span> method.invoke(proxied,args);</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DynamicProxyTest</span> </span>&#123;</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</div><div class="line">    Object proxy = Proxy.newProxyInstance(</div><div class="line">    	Shape.class.getClassLoader(),</div><div class="line">      	<span class="keyword">new</span> Class[]&#123; Shape.class&#125;,</div><div class="line">      	<span class="keyword">new</span> DynamicProxyCircle(<span class="keyword">new</span> Circle())</div><div class="line">    	);</div><div class="line">    Shape s = (Shape)proxy;</div><div class="line">    s.draw();</div><div class="line">    s.show();</div><div class="line">    <span class="comment">//s.runCircle();</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="空对象"><a href="#空对象" class="headerlink" title="空对象"></a>空对象</h3><p>空对象可以部分解决,重要判断空指针的问题, 并且在一些对象情况下, 可以预占, 并且不用反复构造空对象.</p>
-<p>使用Null 接口, 作为标记接口, 动态代理,对象的方式来生成空对象.</p>
-<h3 id="接口和类型信息"><a href="#接口和类型信息" class="headerlink" title="接口和类型信息"></a>接口和类型信息</h3><p><code>getDeclareMethod</code>  可以获得一些方法, 并且用<code>javap</code>  可以反编译出class的所有方法,并得知class的名称.</p>
-<p>通过methods的setAccessible(true) 就可以使用private方法.</p>
-<p>包括内部类, 匿名类,静态内部类的private方法,都可以定位并使用.</p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>RTTI和反射 非常有用, 可以在继承中解决很多问题, 但是有时候不用专门使用反射或者RTTI, 例如 乐器的继承关系里,</p>
-<p>如果Wind 这类乐器需要 clear口水, 可以在client的地方 判断类型,专门处理,  也可以加一个prepare的方法 加到基类里, 让每个乐器都执行 prepare, 只是各自的实现不同.</p>
-<h2 id="我的总结"><a href="#我的总结" class="headerlink" title="我的总结"></a>我的总结</h2><ol>
-<li>掌握 Class、instanceof、reflect的一些用法</li>
-<li>类型统计(工厂模式,递归统计, creater和counter的写法)</li>
-<li>什么时候需要反射，什么时候需要动态代理（避免重复代码，需要统计调用次数，需要hook，需要mixins）</li>
-<li>Class对象比较是不考虑继承的</li>
-<li>空对象场景，class的安全性</li>
-<li>避免滥用RTTI和反射</li>
-</ol>
-<h2 id="Read-More"><a href="#Read-More" class="headerlink" title="Read More"></a>Read More</h2><p>  <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/reflection/proxy.html" target="_blank" rel="external">Dynamic Proxy Classes</a>（Oracle Document）</p>
-<p>​    reflect类库</p>
-<p>​    class 类库   </p>
-<h2 id="END"><a href="#END" class="headerlink" title="END"></a>END</h2></div><script type="text/javascript" src="/js/share.js?v=0.0.0" async></script><a data-url="https://shalk.github.io/2017/06/09/TIJ-review-chapter14-type-information/" data-id="cjde4uawq000fd0vi5vaem48u" class="article-share-link">分享</a><div class="tags"><a href="/tags/java/">java</a><a href="/tags/tij/">tij</a></div><div class="post-nav"><a href="/2017/06/22/TIJ-review-chapter15-generic/" class="pre">TIJ review chapter15 generic</a><a href="/2017/05/26/install-angular-cli-on-win10/" class="next">install angular-cli on win10</a></div><div id="disqus_thread"><div class="btn_click_load"><button class="disqus_click_btn">阅读评论 「请确保 disqus.com 可以正常加载」</button></div><script>var disqus_shortname = 'shalk';
-var disqus_identifier = '2017/06/09/TIJ-review-chapter14-type-information/';
-var disqus_title = 'TIJ review chapter14 type information';
-var disqus_url = 'https://shalk.github.io/2017/06/09/TIJ-review-chapter14-type-information/';
-$('.btn_click_load').click(function() {
-  (function() {
-    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
-  $('.btn_click_load').css('display','none');
-});
-$.ajax({
-  url: 'https://disqus.com/favicon.ico',
-  timeout: 3000,
-  type: 'GET',
-  success: (function() {
-    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    $('.btn_click_load').css('display','none');
-  })(),
-  error: function() {
-    $('.btn_click_load').css('display','block');
-  }
-});</script><script id="dsq-count-scr" src="//shalk.disqus.com/count.js" async></script></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank" class="search-form"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="https://shalk.github.io"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/check-mk/">check_mk</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/http/">http</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/kubernetes/">kubernetes</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/sql/">sql</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/linux/" style="font-size: 15px;">linux</a> <a href="/tags/docker/" style="font-size: 15px;">docker</a> <a href="/tags/java/" style="font-size: 15px;">java</a> <a href="/tags/springboot/" style="font-size: 15px;">springboot</a> <a href="/tags/log/" style="font-size: 15px;">log</a> <a href="/tags/tij/" style="font-size: 15px;">tij</a> <a href="/tags/angular/" style="font-size: 15px;">angular</a> <a href="/tags/check-mk/" style="font-size: 15px;">check_mk</a> <a href="/tags/monitor/" style="font-size: 15px;">monitor</a> <a href="/tags/hexo/" style="font-size: 15px;">hexo</a> <a href="/tags/github/" style="font-size: 15px;">github</a> <a href="/tags/blog/" style="font-size: 15px;">blog</a> <a href="/tags/sql/" style="font-size: 15px;">sql</a> <a href="/tags/http/" style="font-size: 15px;">http</a> <a href="/tags/kubernetes/" style="font-size: 15px;">kubernetes</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/02/08/java编程思想笔记-第20章注解/">java编程思想笔记-第20章注解</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/06/intro-to-http/">http简介</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/25/hello-sql/">《Sams Teach Yourself SQL in 10 Minutes》学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/06/centos7-yum-management/">centos7 yum management</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/29/java的clone和Cloneable/">java的clone和Cloneable</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/24/Spring-Boot配置日志/">Spring Boot配置日志</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/14/java自动包装/">java自动包装</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/14/TIJ-review-chapter16-arrays/">TIJ review chapter16 arrays</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/30/kubernetes-note-1/">kubernetes note 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/22/TIJ-review-chapter15-generic/">TIJ review chapter15 generic</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-comment-o"> 最近评论</i></div><script type="text/javascript" src="//shalk.disqus.com/recent_comments_widget.js?num_items=5&amp;hide_avatars=1&amp;avatar_size=32&amp;excerpt_length=20&amp;hide_mods=1"></script></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="http://www.example1.com/" title="site-name1" target="_blank">site-name1</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2018 <a href="/." rel="nofollow">Shalk's Blog.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/3.0.47/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/3.0.47/jquery.fancybox.min.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
+extends base
+
+block title
+  title= page.title + ' | ' + config.title
+
+block content
+  .post
+    h1.post-title= page.title
+    .post-meta= page.date.format('ll')
+      if page.categories.length > 0
+        span= ' | '
+        span.category
+          for category in page.categories.toArray()
+            a(href=url_for(category.path))= category.name
+      if theme.busuanzi == true
+        script(src='https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js', async)
+        span#busuanzi_container_page_pv= ' | '
+          span#busuanzi_value_page_pv
+          span= ' ' + __('Hits')
+    if theme.disqus
+      a.disqus-comment-count(data-disqus-identifier=page.path, href=url_for(page.path) + '#disqus_thread')
+    if theme.changyan
+      a.ds-thread-count(href=url_for(page.path) + '#SOHUCS')
+        span#changyan_count_unit(style='font-size: 15px; color: #6E7173;') 0
+        span= ' ' + __('Comment')
+      script(src='https://assets.changyan.sohu.com/upload/plugins/plugins.count.js', async)
+    if theme.valine.enable
+      a.disqus-comment-count( href=url_for(page.path) + '#vcomment')
+        span.valine-comment-count(data-xid=url_for(page.path))
+        span 条评论
+    if page.toc
+      div(class='clear')
+        div(id='toc' class='toc-article')
+          div(class='toc-title')= __('contents')
+          != toc(page.content, {list_number: theme.toc_number})
+    .post-content
+      != page.content
+    if theme.donate.enable == true
+      iframe(src='/donate/?AliPayQR=' + theme.donate.alipay_qr + '&WeChatQR=' + theme.donate.wechat_qr + '&GitHub=' + theme.donate.github + '&BTCQR=' + theme.donate.btc_qr + '&BTCKEY='+ theme.donate.btc_key + '&PayPal=' + theme.donate.paypal_url, style='overflow-x:hidden; overflow-y:hidden; border:0xp none #fff; min-height:240px; width:100%;', frameborder='0', scrolling='no')
+    if theme.shareto == true
+      script(type='text/javascript', src=url_for(theme.js) + '/share.js' + '?v=' + theme.version, async)
+      a.article-share-link(data-url=page.permalink, data-id=page._id, data-qrcode=qrcode(page.permalink))= __('shareto')
+
+    include _partial/tag.pug
+    include _partial/post_nav.pug
+
+    if page.comments
+      include _partial/comments.pug

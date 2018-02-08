@@ -1,102 +1,48 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description"><title>TIJ review chapter16 arrays | Shalk's Blog</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/6.0.0/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.2/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.2/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">TIJ review chapter16 arrays</h1><a id="logo" href="/.">Shalk's Blog</a><p class="description"></p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">TIJ review chapter16 arrays</h1><div class="post-meta">Nov 14, 2017<span> | </span><span class="category"><a href="/categories/java/">java</a></span><script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script><span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span><span> 阅读</span></span></div><a data-disqus-identifier="2017/11/14/TIJ-review-chapter16-arrays/" href="/2017/11/14/TIJ-review-chapter16-arrays/#disqus_thread" class="disqus-comment-count"></a><div class="clear"><div id="toc" class="toc-article"><div class="toc-title">文章目录</div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#基本用法"><span class="toc-number">1.</span> <span class="toc-text">基本用法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#传参"><span class="toc-number">2.</span> <span class="toc-text">传参</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#多维数组"><span class="toc-number">3.</span> <span class="toc-text">多维数组</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数组与泛型（不推荐）"><span class="toc-number">4.</span> <span class="toc-text">数组与泛型（不推荐）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Arrays类库"><span class="toc-number">5.</span> <span class="toc-text">Arrays类库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数组填充"><span class="toc-number">6.</span> <span class="toc-text">数组填充</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#拷贝"><span class="toc-number">7.</span> <span class="toc-text">拷贝</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#自动包装"><span class="toc-number">8.</span> <span class="toc-text">自动包装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TODO"><span class="toc-number">9.</span> <span class="toc-text">TODO</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#END"><span class="toc-number">10.</span> <span class="toc-text">END</span></a></li></ol></div></div><div class="post-content"><p>在java中数组是一种特殊的对象，语言原生支持，又称为第一类对象。而在开发中，大部分时间会使用容器（Collection,Map)。 和Collection相比较，数组具有效率，类型和保存基本类型的能力。</p>
-<p>随着泛型的出现，容器可以通过泛型记录保存的对象的类型。泛型是不能使用基本类型的，但是随着自动包装类型（Integer等）的出现，容器也可以存放基本类型。那数组只剩下效率的优势，但是数组有诸多的限制，例如大小固定等。</p>
-<p>数组可以用来实现一些数据结构，同时在基本类型的保存上避开了自动包装的一些坑，在编写一些简单的逻辑时也十分有效。</p>
-<p>下面了解一下数组的基本用法，传参，多维数组，数组泛型，Arrays类库，数组填充，自动包装。</p>
-<h2 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h2><p>声明方式如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">int[] a</div><div class="line">Car[] cars</div><div class="line">char[] chars</div></pre></td></tr></table></figure>
-<p>初始化方式</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">a = new int[3];</div><div class="line">// dynamic aggregate initialization</div><div class="line">a = new int[]&#123;1, 2, 3&#125;;</div><div class="line">// aggregate initialization </div><div class="line">int[] a = &#123;1, 2, 3&#125;;</div><div class="line">Car[] car3 = new Car[3];</div><div class="line">Car[] cars = &#123; new Car(), new Car() &#125;</div></pre></td></tr></table></figure>
-<p>这里可以看到初始化有3种</p>
-<ol>
-<li>只初始化大小，数组空间会被分配出来，对于基本类型会有默认值，int 是0， 整数都是0， 浮点是0.0  boolean是false， 而对象数组，数组存放的是引用类型，默认值为null。此时对象还没有new出来。</li>
-<li>aggregate initialization（集聚初始化），这种写法简便，但是必须要和声明写在一起。</li>
-<li>dynamic aggregate initialization（动态聚集初始化）， 可以不用和声明一起写。</li>
-</ol>
-<p>一般我只写1和3。</p>
-<p>数组访问 </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">a[2] = 3;</div><div class="line">a[10000] 越界异常</div><div class="line">int b = a[1];</div></pre></td></tr></table></figure>
-<p>数组方法</p>
-<p>数组有Object对象的所有方法，例如equals， hashCode，getClass,  toString , 同步wait, notify，notifyAll 等</p>
-<p>数组还有一个域，是length， 不会发生改变。</p>
-<h2 id="传参"><a href="#传参" class="headerlink" title="传参"></a>传参</h2><p>写法如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">void foo(int[] a)&#123;</div><div class="line">	///  </div><div class="line">&#125;</div><div class="line"></div><div class="line">int[] getIntArray(int size) &#123;</div><div class="line">  return new int[size];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h2 id="多维数组"><a href="#多维数组" class="headerlink" title="多维数组"></a>多维数组</h2><p>一维数组写入是T[] ， 二位数组可以降低维度来理解，就是一组 一维数组。</p>
-<p>写法如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">int[][] a;</div><div class="line">int[][] a = new int[3][3];</div><div class="line">a = new int[]][]&#123; &#123;1, 2, 3&#125;, &#123;4, 5, 6&#125;, &#123;7, 8, 9&#125;&#125;;</div><div class="line">int[] b;</div><div class="line">b = a[0];</div><div class="line">b = a[1];</div><div class="line">b = a[2];</div></pre></td></tr></table></figure>
-<p>三维就继续写方括号，当然维度太高就不建议继续用这种写法，自己都看不清楚，应该用数据结构来处理。</p>
-<p>需要注意的是，二维度数组a, 是一个3 个 大小为3的数组， 也可以理解成3 × 3的矩阵。 </p>
-<p>如果使用容器保存二维数组，可以保存多个长度不同的一维数组。</p>
-<h2 id="数组与泛型（不推荐）"><a href="#数组与泛型（不推荐）" class="headerlink" title="数组与泛型（不推荐）"></a>数组与泛型（不推荐）</h2><p>数组可以写成Car[] 这种形式，如果Car是一个泛型类型，是否可以用泛型呢，是可以的。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Pool&lt;Apple&gt;[] pool;</div></pre></td></tr></table></figure>
-<p>然而这里面<strong>有坑</strong> ， 最好不要这么写。</p>
-<figure class="highlight d"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pool = <span class="keyword">new</span> Pool&lt;Apple&gt;[<span class="number">10</span>];</div></pre></td></tr></table></figure>
-<p>这是会编译报错的。</p>
-<p>那只能是</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pool = (Pool&lt;Apple&gt;[])new Pool[10];</div></pre></td></tr></table></figure>
-<p>还有一种就是在使用泛型的类或方法内部使用了T[] 这样的写，也会<strong>踩坑</strong> ,因为T[] 这种对象不能new，只能通过Object转型</p>
-<p>例如</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">class SomeClass&lt;T&gt; &#123;</div><div class="line">  public T[] array;</div><div class="line">  public foo(int size) &#123;</div><div class="line">    array = (T[])new Object[size];</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>如果使用Object来创建这个数组对象，由于擦除的存在，array是一个Object的数组，实际上并没有发生转型。</p>
-<p>但是编译期间会进行类型检查，</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">SomeClass&lt;String&gt;  a = new SomeClass();</div><div class="line">a.foo(10);</div><div class="line">// 编译错误，不是String类型</div><div class="line">// a.array[0] = 123;</div><div class="line">// 运行错误ClassCastException，无法把Object转换成String</div><div class="line">a.array[1] = new String(&quot;123&quot;);</div><div class="line">System.out.println(s1.array[0]);</div></pre></td></tr></table></figure>
-<p>这里访问的时候，需要取到一个String对象，但是内部只有一个Object对象，无法向String转型。</p>
-<h2 id="Arrays类库"><a href="#Arrays类库" class="headerlink" title="Arrays类库"></a>Arrays类库</h2><p>java.util.Arrays 可以配合数组进行使用。</p>
-<p><strong>填充</strong>:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">int[] a = new int[10];</div><div class="line">Arrays.fill(a, 3);</div></pre></td></tr></table></figure>
-<p><strong>组合字符串</strong>:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Arrays.toString(a);</div></pre></td></tr></table></figure>
-<p><strong>浅比较</strong>:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Arrays.equals(a, b);</div></pre></td></tr></table></figure>
-<p>把数组的每个元素，之间使用equals进行比较，基本类型就比较值。因此对象数组，对象要实现equals，按照规范也要实现hashCode。</p>
-<p><strong>深比较</strong>:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Arrays.deepEquals(a, b);</div></pre></td></tr></table></figure>
-<p>如果a 和b是多维数组，会进一步迭代调用比较。因为数组作为对象，本身的equals是直接使用Object的equal，会直接比较引用，只有同一个对象才会相等。</p>
-<p><strong>排序</strong>：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Arrays.sort(a);</div></pre></td></tr></table></figure>
-<p>需要a实现了Comparable 或者</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Array.sort(T[] array, Comparator&lt;T&gt; comp);</div></pre></td></tr></table></figure>
-<p><strong>二叉搜索</strong>:</p>
-<p>数组没有find或者indexOf这种查询方法，对排序的数组可以用二叉搜索</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Arrays.binarySearch(T[] array, T t )</div></pre></td></tr></table></figure>
-<p>返回值为索引，如果找不到，就是 <code>- (插入点) - 1</code> ,当然 对象需要是可比较的。</p>
-<h2 id="数组填充"><a href="#数组填充" class="headerlink" title="数组填充"></a>数组填充</h2><p>Arrays.fill给出了一个填充办法，但是对于对象，fill会填充相同的对象，并不会创建很多对象。</p>
-<p>本章节给了一个套路,用生成器来创建，把数组传参进去，如果数组没有初始化，就在方法里把数组对象new出来，加上泛型，可以把这个方法一般化。</p>
-<p>代码如下:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">//Generator.java</div><div class="line">public interface Generator&lt;T&gt; &#123;</div><div class="line">  T next();</div><div class="line">&#125;</div><div class="line"></div><div class="line">import java.lang.reflect.Array;</div><div class="line">//Generated.java</div><div class="line">public Generated  &#123;</div><div class="line">  public static &lt;T&gt; T[] array (T[] t, Generator&lt;T&gt; gen) &#123;</div><div class="line">    for (int i = 0; i &lt; t.length; i++) &#123;</div><div class="line">      t[i] = gen.next();</div><div class="line">    &#125;</div><div class="line">    return t;</div><div class="line">  &#125;</div><div class="line">  public static &lt;T&gt; T[] array (Class&lt;T&gt; type, Generator&lt;T&gt; gen, int size) &#123;</div><div class="line">    T[] t = (T[]) Array.newInstance(type, size);</div><div class="line">    return array(t, gen);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>基于Lamada的方法如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">// 需要persons已经分配了空间</div><div class="line">Arrays.setAll(persons, i -&gt; new Person());</div><div class="line">Arrays.parallelSetAll(persons, i -&gt; new Person());</div><div class="line">// 或者把整数列表，映射成对象列表，最后转数组。</div><div class="line">Person[] persons = IntStream.range(0, 15)  // 15 is the size</div><div class="line">    .mapToObj(i -&gt; new Person())</div><div class="line">    .toArray(Person[]::new);</div></pre></td></tr></table></figure>
-<h2 id="拷贝"><a href="#拷贝" class="headerlink" title="拷贝"></a>拷贝</h2><p>数组之间可以用<code>System.arraycopy(src, src_start, des, dest_start, length)</code></p>
-<p>这是一个浅拷贝，也就是不会产生新的对象；同时不支持自动包装，src和des类型需要完全相同。</p>
-<h2 id="自动包装"><a href="#自动包装" class="headerlink" title="自动包装"></a>自动包装</h2><p>即基本类型和包装类的相互转换；<code>int &lt;=&gt; Integer</code> </p>
-<p>传参和赋值的时候，int和Integer会自动转换。</p>
-<p>但是泛型只能用包装类；</p>
-<p>并且包装类是对象，传参会传引用的值，因此写算法的时候尽量用int，直接传值，避免在函数中改变了对象。</p>
-<h2 id="TODO"><a href="#TODO" class="headerlink" title="TODO"></a>TODO</h2><p>深入探索-JAVA拷贝</p>
-<p>深入探索-自动包装</p>
-<p>深入探索-Lamada</p>
-<h2 id="END"><a href="#END" class="headerlink" title="END"></a>END</h2></div><script type="text/javascript" src="/js/share.js?v=0.0.0" async></script><a data-url="https://shalk.github.io/2017/11/14/TIJ-review-chapter16-arrays/" data-id="cjde4uaww000od0vid4rmmxua" class="article-share-link">分享</a><div class="tags"><a href="/tags/java/">java</a><a href="/tags/tij/">tij</a></div><div class="post-nav"><a href="/2017/11/14/java自动包装/" class="pre">java自动包装</a><a href="/2017/10/30/kubernetes-note-1/" class="next">kubernetes note 1</a></div><div id="disqus_thread"><div class="btn_click_load"><button class="disqus_click_btn">阅读评论 「请确保 disqus.com 可以正常加载」</button></div><script>var disqus_shortname = 'shalk';
-var disqus_identifier = '2017/11/14/TIJ-review-chapter16-arrays/';
-var disqus_title = 'TIJ review chapter16 arrays';
-var disqus_url = 'https://shalk.github.io/2017/11/14/TIJ-review-chapter16-arrays/';
-$('.btn_click_load').click(function() {
-  (function() {
-    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
-  $('.btn_click_load').css('display','none');
-});
-$.ajax({
-  url: 'https://disqus.com/favicon.ico',
-  timeout: 3000,
-  type: 'GET',
-  success: (function() {
-    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    $('.btn_click_load').css('display','none');
-  })(),
-  error: function() {
-    $('.btn_click_load').css('display','block');
-  }
-});</script><script id="dsq-count-scr" src="//shalk.disqus.com/count.js" async></script></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank" class="search-form"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="https://shalk.github.io"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/check-mk/">check_mk</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/http/">http</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/kubernetes/">kubernetes</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/sql/">sql</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/linux/" style="font-size: 15px;">linux</a> <a href="/tags/docker/" style="font-size: 15px;">docker</a> <a href="/tags/java/" style="font-size: 15px;">java</a> <a href="/tags/springboot/" style="font-size: 15px;">springboot</a> <a href="/tags/log/" style="font-size: 15px;">log</a> <a href="/tags/tij/" style="font-size: 15px;">tij</a> <a href="/tags/angular/" style="font-size: 15px;">angular</a> <a href="/tags/check-mk/" style="font-size: 15px;">check_mk</a> <a href="/tags/monitor/" style="font-size: 15px;">monitor</a> <a href="/tags/hexo/" style="font-size: 15px;">hexo</a> <a href="/tags/github/" style="font-size: 15px;">github</a> <a href="/tags/blog/" style="font-size: 15px;">blog</a> <a href="/tags/sql/" style="font-size: 15px;">sql</a> <a href="/tags/http/" style="font-size: 15px;">http</a> <a href="/tags/kubernetes/" style="font-size: 15px;">kubernetes</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/02/08/java编程思想笔记-第20章注解/">java编程思想笔记-第20章注解</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/06/intro-to-http/">http简介</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/25/hello-sql/">《Sams Teach Yourself SQL in 10 Minutes》学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/06/centos7-yum-management/">centos7 yum management</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/29/java的clone和Cloneable/">java的clone和Cloneable</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/24/Spring-Boot配置日志/">Spring Boot配置日志</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/14/java自动包装/">java自动包装</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/14/TIJ-review-chapter16-arrays/">TIJ review chapter16 arrays</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/30/kubernetes-note-1/">kubernetes note 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/22/TIJ-review-chapter15-generic/">TIJ review chapter15 generic</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-comment-o"> 最近评论</i></div><script type="text/javascript" src="//shalk.disqus.com/recent_comments_widget.js?num_items=5&amp;hide_avatars=1&amp;avatar_size=32&amp;excerpt_length=20&amp;hide_mods=1"></script></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="http://www.example1.com/" title="site-name1" target="_blank">site-name1</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2018 <a href="/." rel="nofollow">Shalk's Blog.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/3.0.47/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/3.0.47/jquery.fancybox.min.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
+extends base
+
+block title
+  title= page.title + ' | ' + config.title
+
+block content
+  .post
+    h1.post-title= page.title
+    .post-meta= page.date.format('ll')
+      if page.categories.length > 0
+        span= ' | '
+        span.category
+          for category in page.categories.toArray()
+            a(href=url_for(category.path))= category.name
+      if theme.busuanzi == true
+        script(src='https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js', async)
+        span#busuanzi_container_page_pv= ' | '
+          span#busuanzi_value_page_pv
+          span= ' ' + __('Hits')
+    if theme.disqus
+      a.disqus-comment-count(data-disqus-identifier=page.path, href=url_for(page.path) + '#disqus_thread')
+    if theme.changyan
+      a.ds-thread-count(href=url_for(page.path) + '#SOHUCS')
+        span#changyan_count_unit(style='font-size: 15px; color: #6E7173;') 0
+        span= ' ' + __('Comment')
+      script(src='https://assets.changyan.sohu.com/upload/plugins/plugins.count.js', async)
+    if theme.valine.enable
+      a.disqus-comment-count( href=url_for(page.path) + '#vcomment')
+        span.valine-comment-count(data-xid=url_for(page.path))
+        span 条评论
+    if page.toc
+      div(class='clear')
+        div(id='toc' class='toc-article')
+          div(class='toc-title')= __('contents')
+          != toc(page.content, {list_number: theme.toc_number})
+    .post-content
+      != page.content
+    if theme.donate.enable == true
+      iframe(src='/donate/?AliPayQR=' + theme.donate.alipay_qr + '&WeChatQR=' + theme.donate.wechat_qr + '&GitHub=' + theme.donate.github + '&BTCQR=' + theme.donate.btc_qr + '&BTCKEY='+ theme.donate.btc_key + '&PayPal=' + theme.donate.paypal_url, style='overflow-x:hidden; overflow-y:hidden; border:0xp none #fff; min-height:240px; width:100%;', frameborder='0', scrolling='no')
+    if theme.shareto == true
+      script(type='text/javascript', src=url_for(theme.js) + '/share.js' + '?v=' + theme.version, async)
+      a.article-share-link(data-url=page.permalink, data-id=page._id, data-qrcode=qrcode(page.permalink))= __('shareto')
+
+    include _partial/tag.pug
+    include _partial/post_nav.pug
+
+    if page.comments
+      include _partial/comments.pug

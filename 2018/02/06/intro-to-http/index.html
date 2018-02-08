@@ -1,97 +1,48 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description"><title>http简介 | Shalk's Blog</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/6.0.0/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.2/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.2/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">http简介</h1><a id="logo" href="/.">Shalk's Blog</a><p class="description"></p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">http简介</h1><div class="post-meta">Feb 6, 2018<span> | </span><span class="category"><a href="/categories/http/">http</a></span><script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script><span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span><span> 阅读</span></span></div><a data-disqus-identifier="2018/02/06/intro-to-http/" href="/2018/02/06/intro-to-http/#disqus_thread" class="disqus-comment-count"></a><div class="clear"><div id="toc" class="toc-article"><div class="toc-title">文章目录</div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP协议"><span class="toc-number">1.</span> <span class="toc-text">HTTP协议</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP请求和响应"><span class="toc-number">2.</span> <span class="toc-text">HTTP请求和响应</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP客户端身份识别"><span class="toc-number">3.</span> <span class="toc-text">HTTP客户端身份识别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP-鉴权机制"><span class="toc-number">4.</span> <span class="toc-text">HTTP 鉴权机制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP安全"><span class="toc-number">5.</span> <span class="toc-text">HTTP安全</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Cookie和Session"><span class="toc-number">6.</span> <span class="toc-text">Cookie和Session</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考"><span class="toc-number">7.</span> <span class="toc-text">参考</span></a></li></ol></div></div><div class="post-content"><p>HTTP（超文本传输协议）是万维网（WWW）的基石，每当访问访问网站的时候，浏览器和网站之间就是用HTTP协议进行沟通，在WEB开发的过程中，无论是处理HTTP请求，还是调用其他的Restful API，以及性能安全性等诸多方面的考虑，都需要对HTTP协议进行充分的了解。下面是我阅读一些文章之后，粗浅的理解和笔记。</p>
-<a id="more"></a>
-<h2 id="HTTP协议"><a href="#HTTP协议" class="headerlink" title="HTTP协议"></a>HTTP协议</h2><p>根据网络7层模型或4层模型，HTTP是应用层协议，通常基于TCP协议。</p>
-<p>HTTP是无状态的，即每一次发送请求，都没有上下文。</p>
-<h2 id="HTTP请求和响应"><a href="#HTTP请求和响应" class="headerlink" title="HTTP请求和响应"></a>HTTP请求和响应</h2><p>http的常见场景是用户浏览器访问页面，此时浏览器称为browser，运行网页的站点称为server。一般我们会把这种叫B/S架构。</p>
-<p>http协议有两种报文，请求报文和响应报文，browser向server发送请求，server会给browser响应。</p>
-<p>请求报文格式通常如下:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">GET / HTTP/1.1</div><div class="line">Host: news.baidu.com</div><div class="line">User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:58.0) Gecko/20100101 Firefox/58.0</div><div class="line">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</div><div class="line">Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2</div><div class="line">Accept-Encoding: gzip, deflate</div><div class="line">Referer: https://www.baidu.com/</div><div class="line">Cookie: BIDUPSID=06EED0B4571DA6E73521DB3D632185C2; PSTM=1483596025; Hm_lvt_e9e114d958ea263de46e080563e254c4=1508488536,1508822807; BAIDUID=FFDBCFEE9399C134F551497BDFE4EE9F:FG=1; H_PS_PSSID=1430_21118_18560; PSINO=1; BDORZ=B490B5EBF6F3CD402E515D22BCDA1598</div><div class="line">Connection: keep-alive</div><div class="line">Upgrade-Insecure-Requests: 1</div></pre></td></tr></table></figure>
-<p>有三部分组成，</p>
-<ol>
-<li>第一行，第一行包括3部分，请求方法（请求方法有在HTTP1.0中只有GET POST，1.1增加了delete put head options）， 请求路径（URL）  协议版本</li>
-<li>消息头(header)， 消息头一般是一行一个，有的是必选，有的可选。</li>
-<li>消息体（content可选），一般POST，PUT可以带消息体，GET DELETE HEAD没有消息体。如果带消息体，header都会给出Content-Length给出字节数。</li>
-</ol>
-<p>响应报文格式通常如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">HTTP/1.1 200 OK</div><div class="line">Connection: keep-alive</div><div class="line">Content-Type: text/html;charset=utf-8</div><div class="line">Date: Tue, 06 Feb 2018 03:09:57 GMT</div><div class="line">Server: Apache</div><div class="line">Tracecode: 05972744920454104842020611</div><div class="line">Tracecode: 05972319640916077066020611</div><div class="line">Vary: Accept-Encoding</div><div class="line">Content-Length: 80575</div><div class="line"></div><div class="line">&lt;!doctype html&gt;</div><div class="line">&lt;html class=&quot;expanded&quot;&gt;</div><div class="line">&lt;head&gt;</div><div class="line">....</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure>
-<p>也是三部分组成</p>
-<ol>
-<li>第一行，包括三部分，协议版本， 状态码， 状态名称（名称和状态码是对应的）</li>
-<li>消息头</li>
-<li>消息体</li>
-</ol>
-<p>因此实现响应对象时，要构造好相应的字段；发送请求时，也需要构造好请求的三部分。</p>
-<h2 id="HTTP客户端身份识别"><a href="#HTTP客户端身份识别" class="headerlink" title="HTTP客户端身份识别"></a>HTTP客户端身份识别</h2><p>由于HTTP是无状态的，如果是一个多用户的网站，如果根据不同的用户返回不同的页面，例如我的购物车，给我推荐广告。</p>
-<p>有一些方式</p>
-<ul>
-<li><del>基于（from, User-Agent,Referer)请求头</del></li>
-<li><del>基于IP（X-forward-For, client-ip）</del></li>
-<li>基于加长的URL</li>
-<li>基于Cookie</li>
-<li>鉴权机制</li>
-</ul>
-<p>下面把他们一一介绍</p>
-<p>From 一般是请求的email地址，但是很少使用</p>
-<p>UserAgent，是浏览器类型，操作系统类型</p>
-<p>Referer，是从哪个地方跳转过来的。</p>
-<p>这些都不能明确的代表某个用户。</p>
-<p>x-forward-for, client-ip ，ip地址也不能完全代表用户。一方面，很多ISP使用nat技术共享了不同用户的IP，很多用户的ip地址是动态的，另一方面，IP地址可以伪造。</p>
-<p>加长url，即在url中补充信息，例如</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">https://www.amazon.com/gp/product/1942788002/ref=s9u_psimh_gw_i2?ie=UTF8&amp;fpl=fresh&amp;pd_rd_i=1942788002&amp;pd_rd_r=70BRSEN2K19345MWASF0&amp;pd_rd_w=KpLza&amp;pd_rd_wg=gTIeL&amp;pf_rd_m=ATVPDKIKX0DER&amp;pf_rd_s=&amp;pf_rd_r=RWRKQXA6PBHQG52JTRW2&amp;pf_rd_t=36701&amp;pf_rd_p=1cf9d009-399c-49e1-901a-7b8786e59436&amp;pf_rd_i=desktop</div></pre></td></tr></table></figure>
-<p>这种是行的通的，对于不同用户给他不同的url参数。</p>
-<p>但是有一些缺点：1. 不可以共用 2. 不好看 3. 破坏服务器端的缓存 4 仅限于当前session 5增加服务器的负载</p>
-<p>Cookie是最常见的方式，提到cookie通常要和session进行比较，这是一个常见面试题，这个放在后面介绍。</p>
-<p>cookie的方式是，有几个来回</p>
-<ol>
-<li>browser发送请求</li>
-<li>server 响应，并在header加入 Set-Cookie</li>
-<li>browser 请求，在header中加入cookie:xxxxxxx</li>
-<li>service响应，并识别用户</li>
-</ol>
-<p>主要注意到是，cookie分两种，一种 session cookie 浏览器关闭之后，cookie就消失了， 一种是 persist cookie， cookie会以文件的形式保存在浏览器的缓存中，浏览器对于cookie是有支持的，当访问相应站点时，会使用相应的cookie文件，并自动添加到每次请求的header中。</p>
-<h2 id="HTTP-鉴权机制"><a href="#HTTP-鉴权机制" class="headerlink" title="HTTP 鉴权机制"></a>HTTP 鉴权机制</h2><p>http authorization 提供了一种方式，让用户输入用户名密码。</p>
-<ol>
-<li>Basic Authorization</li>
-<li>Digest Authorization</li>
-</ol>
-<p>第一种，在header中加了一个字段：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">GET /gallery/personal/images/image1.jpg HTTP/1.1</div><div class="line">Authorization: Basic Zm9vOmJhcg==</div></pre></td></tr></table></figure>
-<p>第二种，是把密码和一些一些随机数做hash，最后服务器也做一下hash，如果发现是一致的就能鉴权了。</p>
-<p>要分3步，1. browser发普通请求， 2 server回请求，并带上随机数，3. browser 发请求，带上用户名密码hash出来值，并带上自己的随机数。</p>
-<p>第二种更安全，但也更复杂，但是第二中由于默认hash算法的脆弱性，而且也给服务器增加了运算负载。相比较而言，更安全同时也简单的方式，是使用HTTPS+ basic authorization.</p>
-<h2 id="HTTP安全"><a href="#HTTP安全" class="headerlink" title="HTTP安全"></a>HTTP安全</h2><p>HTTPS是在HTTP的基础上，加上TLS/SSL的协议。对HTTP的内容进行了加密。</p>
-<p><img src="http://sean-images.qiniudn.com/tls-ssl-_tcp-ip_protocol.png" alt="img"></p>
-<p>从上往下，HTTP的协议报文，会封装进TLS中，再进入TCP中。当server收到请求后，打开TLS报文，需要用密钥解密，才能看到HTTP报文内容。</p>
-<p>因此，HTTPS并不影响HTTP的设计，同时，趋势是走向全站HTTPS。</p>
-<h2 id="Cookie和Session"><a href="#Cookie和Session" class="headerlink" title="Cookie和Session"></a>Cookie和Session</h2><p>cookie 是服务器发送到浏览器并保存在本地一小块数据。它会在浏览器下次向同一服务器再发起请求时被携带并发送到服务器上。通常，它用于告知服务端两个请求是否来自同一浏览器，如保持用户的登录状态。Cookie使基于<a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Overview#HTTP_is_stateless_but_not_sessionless" target="_blank" rel="external">无状态</a>的HTTP协议记录稳定的状态信息成为了可能。</p>
-<p>（待增加）</p>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://code-maze.com/http-series/" target="_blank" rel="external">https://code-maze.com/http-series/</a></p>
-<p><a href="https://machinesaredigging.com/2013/10/29/how-does-a-web-session-work/" target="_blank" rel="external">https://machinesaredigging.com/2013/10/29/how-does-a-web-session-work/</a></p>
-<p><a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Cookies" target="_blank" rel="external">https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Cookies</a></p>
-<p><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Session" target="_blank" rel="external">https://developer.mozilla.org/en-US/docs/Web/HTTP/Session</a></p>
-</div><script type="text/javascript" src="/js/share.js?v=0.0.0" async></script><a data-url="https://shalk.github.io/2018/02/06/intro-to-http/" data-id="cjde4uaxb0014d0vi6poqfcu1" class="article-share-link">分享</a><div class="tags"><a href="/tags/http/">http</a></div><div class="post-nav"><a href="/2018/02/08/java编程思想笔记-第20章注解/" class="pre">java编程思想笔记-第20章注解</a><a href="/2018/01/25/hello-sql/" class="next">《Sams Teach Yourself SQL in 10 Minutes》学习笔记</a></div><div id="disqus_thread"><div class="btn_click_load"><button class="disqus_click_btn">阅读评论 「请确保 disqus.com 可以正常加载」</button></div><script>var disqus_shortname = 'shalk';
-var disqus_identifier = '2018/02/06/intro-to-http/';
-var disqus_title = 'http简介';
-var disqus_url = 'https://shalk.github.io/2018/02/06/intro-to-http/';
-$('.btn_click_load').click(function() {
-  (function() {
-    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
-  $('.btn_click_load').css('display','none');
-});
-$.ajax({
-  url: 'https://disqus.com/favicon.ico',
-  timeout: 3000,
-  type: 'GET',
-  success: (function() {
-    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    $('.btn_click_load').css('display','none');
-  })(),
-  error: function() {
-    $('.btn_click_load').css('display','block');
-  }
-});</script><script id="dsq-count-scr" src="//shalk.disqus.com/count.js" async></script></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank" class="search-form"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="https://shalk.github.io"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/check-mk/">check_mk</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/http/">http</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/kubernetes/">kubernetes</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/sql/">sql</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/linux/" style="font-size: 15px;">linux</a> <a href="/tags/docker/" style="font-size: 15px;">docker</a> <a href="/tags/java/" style="font-size: 15px;">java</a> <a href="/tags/springboot/" style="font-size: 15px;">springboot</a> <a href="/tags/log/" style="font-size: 15px;">log</a> <a href="/tags/tij/" style="font-size: 15px;">tij</a> <a href="/tags/angular/" style="font-size: 15px;">angular</a> <a href="/tags/check-mk/" style="font-size: 15px;">check_mk</a> <a href="/tags/monitor/" style="font-size: 15px;">monitor</a> <a href="/tags/hexo/" style="font-size: 15px;">hexo</a> <a href="/tags/github/" style="font-size: 15px;">github</a> <a href="/tags/blog/" style="font-size: 15px;">blog</a> <a href="/tags/sql/" style="font-size: 15px;">sql</a> <a href="/tags/http/" style="font-size: 15px;">http</a> <a href="/tags/kubernetes/" style="font-size: 15px;">kubernetes</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/02/08/java编程思想笔记-第20章注解/">java编程思想笔记-第20章注解</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/06/intro-to-http/">http简介</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/25/hello-sql/">《Sams Teach Yourself SQL in 10 Minutes》学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/06/centos7-yum-management/">centos7 yum management</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/29/java的clone和Cloneable/">java的clone和Cloneable</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/24/Spring-Boot配置日志/">Spring Boot配置日志</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/14/java自动包装/">java自动包装</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/14/TIJ-review-chapter16-arrays/">TIJ review chapter16 arrays</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/30/kubernetes-note-1/">kubernetes note 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/22/TIJ-review-chapter15-generic/">TIJ review chapter15 generic</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-comment-o"> 最近评论</i></div><script type="text/javascript" src="//shalk.disqus.com/recent_comments_widget.js?num_items=5&amp;hide_avatars=1&amp;avatar_size=32&amp;excerpt_length=20&amp;hide_mods=1"></script></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="http://www.example1.com/" title="site-name1" target="_blank">site-name1</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2018 <a href="/." rel="nofollow">Shalk's Blog.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/3.0.47/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/3.0.47/jquery.fancybox.min.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
+extends base
+
+block title
+  title= page.title + ' | ' + config.title
+
+block content
+  .post
+    h1.post-title= page.title
+    .post-meta= page.date.format('ll')
+      if page.categories.length > 0
+        span= ' | '
+        span.category
+          for category in page.categories.toArray()
+            a(href=url_for(category.path))= category.name
+      if theme.busuanzi == true
+        script(src='https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js', async)
+        span#busuanzi_container_page_pv= ' | '
+          span#busuanzi_value_page_pv
+          span= ' ' + __('Hits')
+    if theme.disqus
+      a.disqus-comment-count(data-disqus-identifier=page.path, href=url_for(page.path) + '#disqus_thread')
+    if theme.changyan
+      a.ds-thread-count(href=url_for(page.path) + '#SOHUCS')
+        span#changyan_count_unit(style='font-size: 15px; color: #6E7173;') 0
+        span= ' ' + __('Comment')
+      script(src='https://assets.changyan.sohu.com/upload/plugins/plugins.count.js', async)
+    if theme.valine.enable
+      a.disqus-comment-count( href=url_for(page.path) + '#vcomment')
+        span.valine-comment-count(data-xid=url_for(page.path))
+        span 条评论
+    if page.toc
+      div(class='clear')
+        div(id='toc' class='toc-article')
+          div(class='toc-title')= __('contents')
+          != toc(page.content, {list_number: theme.toc_number})
+    .post-content
+      != page.content
+    if theme.donate.enable == true
+      iframe(src='/donate/?AliPayQR=' + theme.donate.alipay_qr + '&WeChatQR=' + theme.donate.wechat_qr + '&GitHub=' + theme.donate.github + '&BTCQR=' + theme.donate.btc_qr + '&BTCKEY='+ theme.donate.btc_key + '&PayPal=' + theme.donate.paypal_url, style='overflow-x:hidden; overflow-y:hidden; border:0xp none #fff; min-height:240px; width:100%;', frameborder='0', scrolling='no')
+    if theme.shareto == true
+      script(type='text/javascript', src=url_for(theme.js) + '/share.js' + '?v=' + theme.version, async)
+      a.article-share-link(data-url=page.permalink, data-id=page._id, data-qrcode=qrcode(page.permalink))= __('shareto')
+
+    include _partial/tag.pug
+    include _partial/post_nav.pug
+
+    if page.comments
+      include _partial/comments.pug

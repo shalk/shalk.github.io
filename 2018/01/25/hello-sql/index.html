@@ -1,206 +1,48 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description"><title>《Sams Teach Yourself SQL in 10 Minutes》学习笔记 | Shalk's Blog</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/6.0.0/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.2/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.2/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">《Sams Teach Yourself SQL in 10 Minutes》学习笔记</h1><a id="logo" href="/.">Shalk's Blog</a><p class="description"></p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">《Sams Teach Yourself SQL in 10 Minutes》学习笔记</h1><div class="post-meta">Jan 25, 2018<span> | </span><span class="category"><a href="/categories/sql/">sql</a></span><script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script><span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span><span> 阅读</span></span></div><a data-disqus-identifier="2018/01/25/hello-sql/" href="/2018/01/25/hello-sql/#disqus_thread" class="disqus-comment-count"></a><div class="clear"><div id="toc" class="toc-article"><div class="toc-title">文章目录</div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#上部（1～10）"><span class="toc-number">1.</span> <span class="toc-text">上部（1～10）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#查询"><span class="toc-number">1.1.</span> <span class="toc-text">查询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sort排序"><span class="toc-number">1.2.</span> <span class="toc-text">Sort排序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Filter过滤"><span class="toc-number">1.3.</span> <span class="toc-text">Filter过滤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#高级过滤"><span class="toc-number">1.4.</span> <span class="toc-text">高级过滤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#calculated-field"><span class="toc-number">1.5.</span> <span class="toc-text">calculated field</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Data-Manipulation-Function"><span class="toc-number">1.6.</span> <span class="toc-text">Data Manipulation Function</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Summarizing-Data"><span class="toc-number">1.7.</span> <span class="toc-text">Summarizing Data</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Grouping-data"><span class="toc-number">1.8.</span> <span class="toc-text">Grouping data</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#下部（11～17）"><span class="toc-number">2.</span> <span class="toc-text">下部（11～17）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#子查询"><span class="toc-number">2.1.</span> <span class="toc-text">子查询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JOIN"><span class="toc-number">2.2.</span> <span class="toc-text">JOIN</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#组合查询-UNION"><span class="toc-number">2.3.</span> <span class="toc-text">组合查询 UNION</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#插入数据"><span class="toc-number">2.4.</span> <span class="toc-text">插入数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#更新和删除"><span class="toc-number">2.5.</span> <span class="toc-text">更新和删除</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#定义和修改表格"><span class="toc-number">2.6.</span> <span class="toc-text">定义和修改表格</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#高级（18～22）"><span class="toc-number">3.</span> <span class="toc-text">高级（18～22）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#视图"><span class="toc-number">3.1.</span> <span class="toc-text">视图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#存储过程"><span class="toc-number">3.2.</span> <span class="toc-text">存储过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#事物"><span class="toc-number">3.3.</span> <span class="toc-text">事物</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#游标"><span class="toc-number">3.4.</span> <span class="toc-text">游标</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#高级特性"><span class="toc-number">3.5.</span> <span class="toc-text">高级特性</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#后记"><span class="toc-number">4.</span> <span class="toc-text">后记</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#END"><span class="toc-number">5.</span> <span class="toc-text">END</span></a></li></ol></div></div><div class="post-content"><p>后端编程的时候难免要和数据库打交道，SQL是数据库的语言，而很多数据库又有自己的方言，这里说的数据库特指RDBMS，relation database management system，关系型数据库管理系统，市面上主流的RDBMS包括 Oracle Database，Microsoft SQL Server， IBM DB2 ，MySQL（Mariadb）和PostgreSQL。 这些都是支持SQL的，并且有自己的方言或者说是特殊写法。</p>
-<p>还有一些NoSQL（有的也支持SQL），在这里不做介绍。</p>
-<p>之前我做过一些练习，不过我很快就忘光了，目前我常用的是MySQL，找到了一本书《Sams Teach Yourself SQL in 10 Minutes  》十分不错，打算一口气读完。</p>
-<p>这本书有22个章节，下面分两部分记录笔记。</p>
-<a id="more"></a>
-<h2 id="上部（1～10）"><a href="#上部（1～10）" class="headerlink" title="上部（1～10）"></a>上部（1～10）</h2><p>SQL（structured query language）是与数据库交互的语言。</p>
-<p>database可以保存结构化的数据，既可以是存在一个文件或者多个文件内。</p>
-<p>Mysql,Oracle都是数据库软件，就是DBMS就是数据库管理软件，通过软件可以创建或者删除database，</p>
-<p>database可以有很多table，table保存一组特定类型的结构化数据。</p>
-<p>schema是database和table的基本布局和属性信息。</p>
-<p>column是一个表的一个域，一个表可以有多个列</p>
-<p>datatype是每个列都必须有特定的数据类型。</p>
-<p>row 是一行，table中的一条记录。</p>
-<p>primary key，主键，一列或者多列 用于唯一确定行的，没有两个row有相同的主键。</p>
-<p>主键不是必须的，但是建议有主键</p>
-<h3 id="查询"><a href="#查询" class="headerlink" title="查询"></a>查询</h3><p>始于SELECT  prod_name FROM products;</p>
-<p>SQL的关键字是没有大小写区分的，但是column 的名称和 table的名称的数据库是有大小写区分的。</p>
-<p>建议关键字都用大写， </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">SELECT column1, column2 FROM tablename;</div></pre></td></tr></table></figure>
-<h3 id="Sort排序"><a href="#Sort排序" class="headerlink" title="Sort排序"></a>Sort排序</h3><p>(结果根据列排序，可以用编号)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">SELECT column1, column2 FROM tablename ORDER BY column1;</div><div class="line">SELECT column1, column2 FROM tablename ORDER BY 1, 2;</div></pre></td></tr></table></figure>
-<h3 id="Filter过滤"><a href="#Filter过滤" class="headerlink" title="Filter过滤"></a>Filter过滤</h3><p>通常结果要过滤</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">SELECT prod_name, prod_price FROM Products WHERE prod_price &gt; 3.49;</div></pre></td></tr></table></figure>
-<p>用WHERE 子句跟在后面，数字比较的可以用(大于 小于 等于 不等于) BETWEEN 和 IS NULL；</p>
-<p>并且，如果排序和过滤都要用，ORDER BY 在WHERE的后面。</p>
-<h3 id="高级过滤"><a href="#高级过滤" class="headerlink" title="高级过滤"></a>高级过滤</h3><p>即多个过滤条件，条件取反，IN</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">SELECT prod_id, prod_price, prod_name</div><div class="line">FROM Products</div><div class="line">WHERE vend_id = &apos;DLL01&apos; AND prod_price &lt;= 4;</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">SELECT prod_id, prod_price, prod_name</div><div class="line">FROM Products</div><div class="line">WHERE vend_id = &apos;DLL01&apos; OR prod_price &lt;= 4;</div></pre></td></tr></table></figure>
-<p>需要注意的是，AND的优先级比较高， 如果有AND和OR 混合在一起，要判断是不是预期的逻辑，如果不是需要加括号，把需要OR的先括起来。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">SELECT prod_name, prod_price</div><div class="line">FROM Products</div><div class="line">WHERE vend_id = &apos;DLL01&apos; OR vend_id = &apos;BRS01&apos;</div><div class="line">AND prod_price &gt;= 10;</div></pre></td></tr></table></figure>
-<p><strong>IN</strong>用来判断字符串或者数字在某几个可能,写起来比OR要简便</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">SELECT prod_name, prod_price</div><div class="line">FROM Products</div><div class="line">WHERE vend_id IN (&apos;DLL01&apos;,&apos;BRS01&apos;)</div><div class="line">ORDER BY prod_name;</div></pre></td></tr></table></figure>
-<p><strong>NOT</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">SELECT prod_name, prod_price</div><div class="line">FROM Products</div><div class="line">WHERE NOT vend_id = &apos;DLL01&apos;;</div></pre></td></tr></table></figure>
-<p><strong>wildcard filter 通配符过滤</strong></p>
-<p>LIKE是模糊匹配，一般是字符串局部匹配即可，有三种通配符，<code>%</code>(匹配任意字符可以是0个字符)  <code>_</code>(匹配一个字符) <code>[]</code>(方括号内可以是多个可能的字符，不过mysql不支持)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">SELECT prod_id, prod_name</div><div class="line">FROM Products</div><div class="line">WHERE prod_name LIKE &apos;% inch teddy bear&apos;;</div><div class="line"></div><div class="line">SELECT prod_id, prod_name</div><div class="line">FROM Products</div><div class="line">WHERE prod_name LIKE &apos;__ inch teddy bear&apos;;</div></pre></td></tr></table></figure>
-<p>需要注意的是 <code>WHERE column1 LIKE &#39;%&#39;</code> 是不会匹配NULL的列的。</p>
-<h3 id="calculated-field"><a href="#calculated-field" class="headerlink" title="calculated field"></a>calculated field</h3><p>计算列，字符串进行函数处理，例如拼接concat，去空格trim/rtrim/ltrim，并且结果可以取别名。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">SELECT Concat(vend_name, &apos; (&apos;, vend_country, &apos;)&apos;)</div><div class="line">AS vend_title</div><div class="line">FROM Vendors</div><div class="line">ORDER BY vend_name;</div></pre></td></tr></table></figure>
-<p><strong>数值运算</strong>（加减乘除)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">SELECT prod_id,</div><div class="line">quantity,</div><div class="line">item_price,</div><div class="line">quantity*item_price AS expanded_price</div><div class="line">FROM OrderItems</div><div class="line">WHERE order_num = 20008;</div></pre></td></tr></table></figure>
-<h3 id="Data-Manipulation-Function"><a href="#Data-Manipulation-Function" class="headerlink" title="Data Manipulation Function"></a>Data Manipulation Function</h3><p>数据操作函数，例如前面的trim，函数可以操作数据。比较常见的有一些这些</p>
-<p><code>SUBSTRING</code>（子串）,<code>CONVERT</code>（格式转换）, <code>CURDATE</code>（当前日期） </p>
-<p>不同DBMS的函数都不太一样，主要有4大类</p>
-<ol>
-<li>对数值进行计算的函数</li>
-<li>对字符串进行处理的函数</li>
-<li>日期时间相关的函数</li>
-<li>从DBMS取到的系统相关函数，例如登录的用户数量</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">SELECT vend_name, UPPER(vend_name) AS vend_name_upcase</div><div class="line">FROM Vendors</div><div class="line">ORDER BY vend_name;</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">SELECT cust_name, cust_contact</div><div class="line">FROM Customers</div><div class="line">WHERE SOUNDEX(cust_contact) = SOUNDEX(&apos;Michael Green&apos;);</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">SELECT order_num</div><div class="line">FROM Orders</div><div class="line">WHERE YEAR(order_date) = 2012;</div></pre></td></tr></table></figure>
-<p>数值函数</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ABS() COS() SIN() TAN()  PI() SQRT() EXP() LOG()</div></pre></td></tr></table></figure>
-<h3 id="Summarizing-Data"><a href="#Summarizing-Data" class="headerlink" title="Summarizing Data"></a>Summarizing Data</h3><p>汇总数据</p>
-<p>汇总数据，例如平均值，数量，最大，最小，总和</p>
-<p>可以用</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">SUM() MAX() MIN() AVG() COUNT()</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">SELECT AVG(prod_price) AS avg_price</div><div class="line">FROM Products;</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">SELECT COUNT(*) AS num_cust</div><div class="line">FROM Customers;</div><div class="line"></div><div class="line">SELECT COUNT(cust_email) AS num_cust</div><div class="line">FROM Customers;</div></pre></td></tr></table></figure>
-<p>count(columnname) 是计算某列的行数，不算null</p>
-<p>count(*) 是计算行数，包含null</p>
-<h3 id="Grouping-data"><a href="#Grouping-data" class="headerlink" title="Grouping data"></a>Grouping data</h3><p>数据分组</p>
-<p>例如一个表单有所有参加生产的产品，需要知道，每个厂家生产的产品数量。 需要按照厂家id 进行分组。并且按照组 计算每组的数据数量</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">SELECT vend_id, COUNT(*) AS num_prods</div><div class="line">FROM Products</div><div class="line">GROUP BY vend_id;</div></pre></td></tr></table></figure>
-<p>这里有一些约束：</p>
-<ul>
-<li>group by 在WHERE 后面，先过滤后分组，在ORDER BY 前面。 SELECT的结果再排序。</li>
-<li>group by 可以有多个column, （不能是变长的数据类型，例如text memo）</li>
-<li>select 后面 只能用 group by的 columns</li>
-<li>select 后面的 column 都必须出现在group by 后面</li>
-<li>group by 不能用alias</li>
-<li>如果column有null， group by 可会把null的分成一组</li>
-<li>这个时候COUNT(*) 是每组的数量</li>
-</ul>
-<p><strong>过滤组</strong></p>
-<p> HAVING 子句 group by 再接having  可以有条件判断，把不满足条件的组过滤掉。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">SELECT order_num, COUNT(*) AS items</div><div class="line">FROM OrderItems</div><div class="line">GROUP BY order_num</div><div class="line">HAVING COUNT(*) &gt;= 3</div><div class="line">ORDER BY items, order_num;</div></pre></td></tr></table></figure>
-<p>整个组合一下，顺序就是 <code>SELECT</code>  <code>FROM</code>  <code>GROUP BY</code> <code>HAVING</code> <code>ORDER BY</code></p>
-<h2 id="下部（11～17）"><a href="#下部（11～17）" class="headerlink" title="下部（11～17）"></a>下部（11～17）</h2><p>子查询，join，高级join， 组合查询，插入数据， 更新和删除数据，创建和操作表格（DDL)</p>
-<h3 id="子查询"><a href="#子查询" class="headerlink" title="子查询"></a>子查询</h3><p>就是SELECT 中嵌套 其他的查询，这种情况很常见。</p>
-<p>比如某个查询的结果直接 as为一个列，或者在WHERE语句中IN里加一个查询</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">SELECT cust_id</div><div class="line">FROM Orders</div><div class="line">WHERE order_num IN (SELECT order_num</div><div class="line">FROM OrderItems</div><div class="line">WHERE prod_id = &apos;RGAN01&apos;);</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">SELECT cust_name,</div><div class="line">cust_state,</div><div class="line">(SELECT COUNT(*)</div><div class="line">FROM Orders</div><div class="line">WHERE Orders.cust_id = Customers.cust_id) AS orders</div><div class="line">FROM Customers</div><div class="line">ORDER BY cust_name</div></pre></td></tr></table></figure>
-<p>当然上面的例子，也可以后用用join来解决。</p>
-<h3 id="JOIN"><a href="#JOIN" class="headerlink" title="JOIN"></a>JOIN</h3><p>这个很重要，把多个表组合层一个表。</p>
-<p>标准理论上有三种JOIN（有的地方解释为五种，六种没必要）</p>
-<ol>
-<li>Cartesian JOIN （笛卡尔JOIN， 也叫CROSS JOIN)</li>
-<li>INNER JOIN（内交）</li>
-<li>OUTER JOIN，其中OUTER JOIN 有3种， LEFT JOIN, RIGHT JOIN , FULL JOIN。</li>
-</ol>
-<p>举例说明这5种:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">DROP TABLE IF EXISTS teacher;</div><div class="line">create table teacher ( </div><div class="line">fullname VARCHAR(20),</div><div class="line">info VARCHAR(20),</div><div class="line">city_zip int</div><div class="line">);</div><div class="line">insert into teacher( fullname, city_zip) VALUES( &quot;teacher sam&quot;, 101);</div><div class="line">insert into teacher( fullname, city_zip) VALUES( &quot;teacher green&quot;, 102);</div><div class="line">insert into teacher( fullname, city_zip) VALUES( &quot;teacher allen&quot;, 107);</div><div class="line"></div><div class="line">DROP TABLE IF EXISTS student;</div><div class="line"></div><div class="line">create table student ( </div><div class="line">s_fullname VARCHAR(20),</div><div class="line">s_info VARCHAR(20),</div><div class="line">city_zip int</div><div class="line">);</div><div class="line"></div><div class="line">insert into student( s_fullname, city_zip) VALUES( &quot;student tom&quot;, 101);</div><div class="line">insert into student( s_fullname, city_zip) VALUES( &quot;student jack&quot;, 102);</div><div class="line">insert into student( s_fullname, city_zip) VALUES( &quot;student mike&quot;, 108);</div></pre></td></tr></table></figure>
-<p>笛卡尔JOIN</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">SELECT * from teacher JOIN student;</div></pre></td></tr></table></figure>
-<p>会把3×3的结果全部展示出来，接就是每个老师会对应一个学生。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">teacher sam		101	student tom		101</div><div class="line">teacher green		102	student tom		101</div><div class="line">teacher allen		107	student tom		101</div><div class="line">teacher sam		101	student jack		102</div><div class="line">teacher green		102	student jack		102</div><div class="line">teacher allen		107	student jack		102</div><div class="line">teacher sam		101	student mike		108</div><div class="line">teacher green		102	student mike		108</div><div class="line">teacher allen		107	student mike		108</div></pre></td></tr></table></figure>
-<p>如果要把老师和学生按照 city_zip 对应起来，需要添加where子句</p>
-<p>INNER JOIN </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">SELECT * from teacher inner join student on teacher.city_zip = student.city_zip</div></pre></td></tr></table></figure>
-<p>把能对应的老师和学生找出来,结果如下，如果有老师找不到对应的学生，就排除掉，学生找不到对应的老师的也是。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">teacher sam		101	student tom		101</div><div class="line">teacher green		102	student jack		102</div></pre></td></tr></table></figure>
-<p>OUTER JOIN</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">LEFT OUTER JOIN ON</div><div class="line">RIGHT OUTER JOIN ON</div><div class="line">FULL OUTER JOIN ON （mysql没有这个）</div></pre></td></tr></table></figure>
-<p>left outer join 会保证每个左边的表都会出现：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">SELECT * from teacher LEFT OUTER JOIN student on teacher.city_zip = student.city_zip</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">teacher sam		101	student tom		101</div><div class="line">teacher green		102	student jack		102</div><div class="line">teacher allen		107</div></pre></td></tr></table></figure>
-<p>right outer join 会把整右边的表会出现:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">SELECT * from teacher RIGHT OUTER JOIN student on teacher.city_zip = student.city_zip</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">teacher sam		101	student tom		101</div><div class="line">teacher green		102	student jack		102</div><div class="line">			         student mike		108</div></pre></td></tr></table></figure>
-<p>理论上，full的话，应该把左右没有匹配的都补出来，不过mysql没有。</p>
-<p>另外需要补充的是，mysql做了优化之后， inner join, join ,cross join 是等价的。</p>
-<p>而且当且仅有没有where子句的时候才是笛卡尔join，加了where子句就是 inner  join on 是一样的。</p>
-<p>下面是手册说明：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">In MySQL, JOIN, CROSS JOIN, and INNER JOIN are syntactic equivalents (they can replace each other). In standard SQL, they are not equivalent. INNER JOIN is used with an ON clause, CROSS JOIN is used otherwise.</div><div class="line"></div><div class="line">In general, parentheses can be ignored in join expressions containing only inner join operations. MySQL also supports nested joins.</div></pre></td></tr></table></figure>
-<p>另外可以用UNION来实现FULL OUTER JOIN</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">SELECT * from teacher LEFT OUTER JOIN student on teacher.city_zip = student.city_zip</div><div class="line">UNION</div><div class="line">SELECT * from teacher RIGHT OUTER JOIN student on teacher.city_zip = student.city_zip</div></pre></td></tr></table></figure>
-<p>其他的维度，nature join, self join;</p>
-<p>nature join 说的是，结果中，不包含重名的列，在select中把不重名的部分跳出来。</p>
-<p>self join 说的是，表格join自身。</p>
-<h3 id="组合查询-UNION"><a href="#组合查询-UNION" class="headerlink" title="组合查询 UNION"></a>组合查询 UNION</h3><p>把两次查询的结果，合并在一起，默认是去重的， UNION ALL 不去重复。</p>
-<h3 id="插入数据"><a href="#插入数据" class="headerlink" title="插入数据"></a>插入数据</h3><p>对这部分的介绍很简略，就是INSERT INTO   VALUE 的标准语法格式。</p>
-<p>INSERT INTO  table1(…) SELECT  FROM  这是我经常使用的方式</p>
-<h3 id="更新和删除"><a href="#更新和删除" class="headerlink" title="更新和删除"></a>更新和删除</h3><p>UPDATE  table1 SET xx = xxx WHERE ….</p>
-<p>我会用更复杂的update table1 inner join ………..  set …..; 即 先用join把右侧的表格扩展出来，并且构造出一个即将赋值的域，然后更新table1，而且右侧的表格可以用select来构造。</p>
-<p>DELETE FROM TABLE WHERE …………</p>
-<h3 id="定义和修改表格"><a href="#定义和修改表格" class="headerlink" title="定义和修改表格"></a>定义和修改表格</h3><p>create table t1 () 此处的语法介绍比较简略，没有详细介绍约束。</p>
-<p>alter table 的语法介绍，我也很少alter表格布局，而且建议表格有数据之后不要修改表格。</p>
-<p>create table t1 as  select * from t2; 可以复制一份表格。</p>
-<p>删除表格 drop table t1;</p>
-<p>重命名：</p>
-<p>有的DBMS支持rename语句，但是据说这个有丢数据的风险。</p>
-<p>建议是创建一份完全一样的表格（名称不同），把数据迁移过去，再把原表删除（或者备份）。</p>
-<h2 id="高级（18～22）"><a href="#高级（18～22）" class="headerlink" title="高级（18～22）"></a>高级（18～22）</h2><p>视图，存储过程，游标，高级SQL特性</p>
-<h3 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h3><p>视图是虚拟表，数据都来自其他表格。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">CREATE VIEW t3 AS</div><div class="line">SELECT * FROM t1 inner join t2 on where t1.xxx = t2.xxx;</div></pre></td></tr></table></figure>
-<h3 id="存储过程"><a href="#存储过程" class="headerlink" title="存储过程"></a>存储过程</h3><p>存储过程是可以反复使用的，有点像函数：</p>
-<p>但需要更复杂的查询和运算，可以使用存储过程，有3个优点， 简单，高效，安全。</p>
-<p>我认为，一方面，存储过程的封装提供了一定的安全性，也让使用者得到了便利。 另一方面，这些语句提前编译了，而不用反复编译，确实待了一些高效。</p>
-<p>存储过程的写法，和数据关系比较大， MYSQL的写法如下:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">delimiter //</div><div class="line">CREATE PROCEDURE pro1 (</div><div class="line">x1  IN VARCHAR,</div><div class="line">x2  IN INT,</div><div class="line">out1 OUT INT</div><div class="line">)</div><div class="line">BEGIN</div><div class="line">	select ..............;</div><div class="line">	cout1 := xxxx</div><div class="line">END;</div><div class="line">//</div><div class="line">delimiter ;</div></pre></td></tr></table></figure>
-<p>我们再找几个实例：</p>
-<p>（TODO 增加）</p>
-<h3 id="事物"><a href="#事物" class="headerlink" title="事物"></a>事物</h3><p>数据库非常重要的是提供了事务的支持，可以把一些列操作组成一个事务。</p>
-<p>事务有几个特性：一致性（无论什么时候操作，结果是不变的），原子性（一系列操作，要么都执行，要么都不执行），隔离性（一个事务不会被其他事务干扰），持久性（对数据的改变是永久有效的） 这就简称为ACID（ atomicity, consistency, isolation, durability)。</p>
-<p>对于mysql，默认是给每个语句单独组成自动事务的，有一个变量，autocommit 可以设置. 0是关闭，1是开启。我们要把多条语句设置成一组事务，先要把这个设置为0.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">set autocommit = 0;</div><div class="line">BEGIN TRANSACTION;</div><div class="line">INSERT into t1 (id) values(10);</div><div class="line">update t2 set quality = 100 where name = &quot;will jack&quot;;</div><div class="line">COMMIT;</div></pre></td></tr></table></figure>
-<p>COMMIT;就代表这个事务结束并提交。</p>
-<p>有的时候可以回滚，默认是回滚整个事务。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">set autocommit = 0;</div><div class="line">BEGIN TRANSACTION;</div><div class="line">INSERT into t1 (id) values(10);</div><div class="line">update t2 set quality = 100 where name = &quot;will jack&quot;;</div><div class="line">ROLLBACK;</div></pre></td></tr></table></figure>
-<p>当然也可以在中间建立回滚点，回滚部分事务。</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">set autocommit = 0;</div><div class="line">BEGIN TRANSACTION;</div><div class="line">INSERT into t1 (id) values(10);</div><div class="line">SAVEPOINT AS point1; </div><div class="line">update t2 set quality = 100 where name = &quot;will jack&quot;;</div><div class="line">ROLLBACK TO point1;</div></pre></td></tr></table></figure>
-<p>一旦出现ROLLBACK,commit,就代表上一个事务结束了。</p>
-<p>当然一般编写语句的时候，会判断是否出现执行出错，出错才回滚。</p>
-<h3 id="游标"><a href="#游标" class="headerlink" title="游标"></a>游标</h3><p>对于mysql，游标必须声明在存储过程中。</p>
-<p>分成四个步骤，声明，开启，使用，关闭。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">DROP PROCEDURE IF EXISTS proc1;</div><div class="line">delimiter //</div><div class="line">CREATE PROCEDURE proc1 ()</div><div class="line">BEGIN</div><div class="line">DECLARE a char(30);</div><div class="line">DECLARE done boolean default 0;</div><div class="line">DECLARE dudu CURSOR FOR SELECT</div><div class="line">	cust_name</div><div class="line">FROM</div><div class="line">	Customers;</div><div class="line"></div><div class="line">DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1;</div><div class="line">open dudu;</div><div class="line"></div><div class="line">label1: LOOP</div><div class="line">fetch dudu into a;</div><div class="line">IF NOT done THEN</div><div class="line">ITERATE label1;</div><div class="line">END IF;</div><div class="line">LEAVE label1;</div><div class="line">END LOOP label1;</div><div class="line"></div><div class="line">close dudu;</div><div class="line">END ;//</div><div class="line">delimiter ;</div></pre></td></tr></table></figure>
-<p>这里配合了DECLARE HANDLER 和 LOOP .. END LOOP;的语法。</p>
-<h3 id="高级特性"><a href="#高级特性" class="headerlink" title="高级特性"></a>高级特性</h3><p>constraint:</p>
-<p>有主键约束，外键约束，check约束，唯一性约束。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">alter table t1 add primary key (id);</div><div class="line">alter table t1 drop primary key;</div><div class="line"></div><div class="line">ALTER TABLE test ADD CONSTRAINT cust_id_fk FOREIGN KEY (cust_id) REFERENCES Customers (cust_id);</div><div class="line">ALTER TABLE test DROP FOREIGN KEY test_ibfk_1;</div><div class="line"></div><div class="line">ALTER TABLE test ADD CONSTRAINT CHECK (size &gt; 10); #在mysql中没有效果</div><div class="line"></div><div class="line">ALTER TABLE test ADD CONSTRAINT  tname_uniq UNIQUE(tname);</div><div class="line">ALTER TABLE test DROP INDEX tname_uniq;</div></pre></td></tr></table></figure>
-<p>索引：</p>
-<p>索引可以加速，对某列排序或者作为条件的查询，但是会占用更多的空间，降低update,insert,delete的速度。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">CREATE INDEX tname_ind ON test(tname);</div><div class="line">alter table test drop index tname_ind;</div></pre></td></tr></table></figure>
-<p>也可以多列同时做索引，当对两列同时做排序时有用。</p>
-<p>trigger:</p>
-<p>类似于存储过程保存在系统中，当相关的表格个进行insert 或者update操作时触发，根据DBMS的实现不同，有的是在操作前有的是在操作后（有点像HOOK）。当需要保证数据一致性、基于当前表格个改变其他表格、附加验证或回滚、计算列值或更新时间戳时，适合使用trigger。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">CREATE TRIGGER custom_state</div><div class="line">ON Customers</div><div class="line">FOR INSERT, UPDATE</div><div class="line">AS </div><div class="line">UPDATE Customers</div><div class="line">SET cust_state = UPPER(cust_state)</div><div class="line">WHERE Customers.cust_id = inserted.cust_id;</div></pre></td></tr></table></figure>
-<p>安全：</p>
-<p>本书只是略过，使用GRANT 和REVOKE提供权限。</p>
-<p>其他疑问：</p>
-<p>函数和存储过程有什么区别，什么时候用函数。</p>
-<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>首先，本书确实如作者所说，直接进入SQL的部分，十分实用。以往看一本数据库的书，上来讲各种原理，或者特定DBMS的介绍，让人云里雾里直接放弃。</p>
-<p>其次，相比W3C的SQL教程生动的多，书中并不是单列语法，给出了完整的例子和详细的分析，而且尽量介绍标准SQL，略微介绍主流DB的区别。</p>
-<p>再次，书里的给了足够的篇幅给SELECT相关的部分，大概看到一半，就解决大部分简单的问题，尤其是JOIN相关。</p>
-<p>最后，指出一点不足，书的后面部分包括CUSOR ，事务，存储过程，以及高级特性，都介绍比较简略，一方面这是一本入门书籍，另一方面，不同数据库在这里的出入较大，而我在使用MYSQL数据库查了一些官方手册才明白MYSQL中的基本用法。</p>
-<p>综上，这是一本极好的SQL入门书籍，正如知乎上一些推荐的，是首选。</p>
-<h2 id="END"><a href="#END" class="headerlink" title="END"></a>END</h2></div><script type="text/javascript" src="/js/share.js?v=0.0.0" async></script><a data-url="https://shalk.github.io/2018/01/25/hello-sql/" data-id="cjde4uax6000wd0vicm2ljn2w" class="article-share-link">分享</a><div class="tags"><a href="/tags/sql/">sql</a></div><div class="post-nav"><a href="/2018/02/06/intro-to-http/" class="pre">http简介</a><a href="/2017/12/06/centos7-yum-management/" class="next">centos7 yum management</a></div><div id="disqus_thread"><div class="btn_click_load"><button class="disqus_click_btn">阅读评论 「请确保 disqus.com 可以正常加载」</button></div><script>var disqus_shortname = 'shalk';
-var disqus_identifier = '2018/01/25/hello-sql/';
-var disqus_title = '《Sams Teach Yourself SQL in 10 Minutes》学习笔记';
-var disqus_url = 'https://shalk.github.io/2018/01/25/hello-sql/';
-$('.btn_click_load').click(function() {
-  (function() {
-    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
-  $('.btn_click_load').css('display','none');
-});
-$.ajax({
-  url: 'https://disqus.com/favicon.ico',
-  timeout: 3000,
-  type: 'GET',
-  success: (function() {
-    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    $('.btn_click_load').css('display','none');
-  })(),
-  error: function() {
-    $('.btn_click_load').css('display','block');
-  }
-});</script><script id="dsq-count-scr" src="//shalk.disqus.com/count.js" async></script></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank" class="search-form"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="https://shalk.github.io"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/check-mk/">check_mk</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/http/">http</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/kubernetes/">kubernetes</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/sql/">sql</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/linux/" style="font-size: 15px;">linux</a> <a href="/tags/docker/" style="font-size: 15px;">docker</a> <a href="/tags/java/" style="font-size: 15px;">java</a> <a href="/tags/springboot/" style="font-size: 15px;">springboot</a> <a href="/tags/log/" style="font-size: 15px;">log</a> <a href="/tags/tij/" style="font-size: 15px;">tij</a> <a href="/tags/angular/" style="font-size: 15px;">angular</a> <a href="/tags/check-mk/" style="font-size: 15px;">check_mk</a> <a href="/tags/monitor/" style="font-size: 15px;">monitor</a> <a href="/tags/hexo/" style="font-size: 15px;">hexo</a> <a href="/tags/github/" style="font-size: 15px;">github</a> <a href="/tags/blog/" style="font-size: 15px;">blog</a> <a href="/tags/sql/" style="font-size: 15px;">sql</a> <a href="/tags/http/" style="font-size: 15px;">http</a> <a href="/tags/kubernetes/" style="font-size: 15px;">kubernetes</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/02/08/java编程思想笔记-第20章注解/">java编程思想笔记-第20章注解</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/06/intro-to-http/">http简介</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/25/hello-sql/">《Sams Teach Yourself SQL in 10 Minutes》学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/06/centos7-yum-management/">centos7 yum management</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/29/java的clone和Cloneable/">java的clone和Cloneable</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/24/Spring-Boot配置日志/">Spring Boot配置日志</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/14/java自动包装/">java自动包装</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/14/TIJ-review-chapter16-arrays/">TIJ review chapter16 arrays</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/30/kubernetes-note-1/">kubernetes note 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/22/TIJ-review-chapter15-generic/">TIJ review chapter15 generic</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-comment-o"> 最近评论</i></div><script type="text/javascript" src="//shalk.disqus.com/recent_comments_widget.js?num_items=5&amp;hide_avatars=1&amp;avatar_size=32&amp;excerpt_length=20&amp;hide_mods=1"></script></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="http://www.example1.com/" title="site-name1" target="_blank">site-name1</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2018 <a href="/." rel="nofollow">Shalk's Blog.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/3.0.47/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/3.0.47/jquery.fancybox.min.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
+extends base
+
+block title
+  title= page.title + ' | ' + config.title
+
+block content
+  .post
+    h1.post-title= page.title
+    .post-meta= page.date.format('ll')
+      if page.categories.length > 0
+        span= ' | '
+        span.category
+          for category in page.categories.toArray()
+            a(href=url_for(category.path))= category.name
+      if theme.busuanzi == true
+        script(src='https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js', async)
+        span#busuanzi_container_page_pv= ' | '
+          span#busuanzi_value_page_pv
+          span= ' ' + __('Hits')
+    if theme.disqus
+      a.disqus-comment-count(data-disqus-identifier=page.path, href=url_for(page.path) + '#disqus_thread')
+    if theme.changyan
+      a.ds-thread-count(href=url_for(page.path) + '#SOHUCS')
+        span#changyan_count_unit(style='font-size: 15px; color: #6E7173;') 0
+        span= ' ' + __('Comment')
+      script(src='https://assets.changyan.sohu.com/upload/plugins/plugins.count.js', async)
+    if theme.valine.enable
+      a.disqus-comment-count( href=url_for(page.path) + '#vcomment')
+        span.valine-comment-count(data-xid=url_for(page.path))
+        span 条评论
+    if page.toc
+      div(class='clear')
+        div(id='toc' class='toc-article')
+          div(class='toc-title')= __('contents')
+          != toc(page.content, {list_number: theme.toc_number})
+    .post-content
+      != page.content
+    if theme.donate.enable == true
+      iframe(src='/donate/?AliPayQR=' + theme.donate.alipay_qr + '&WeChatQR=' + theme.donate.wechat_qr + '&GitHub=' + theme.donate.github + '&BTCQR=' + theme.donate.btc_qr + '&BTCKEY='+ theme.donate.btc_key + '&PayPal=' + theme.donate.paypal_url, style='overflow-x:hidden; overflow-y:hidden; border:0xp none #fff; min-height:240px; width:100%;', frameborder='0', scrolling='no')
+    if theme.shareto == true
+      script(type='text/javascript', src=url_for(theme.js) + '/share.js' + '?v=' + theme.version, async)
+      a.article-share-link(data-url=page.permalink, data-id=page._id, data-qrcode=qrcode(page.permalink))= __('shareto')
+
+    include _partial/tag.pug
+    include _partial/post_nav.pug
+
+    if page.comments
+      include _partial/comments.pug

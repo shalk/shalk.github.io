@@ -1,60 +1,48 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description"><title>centos7 yum management | Shalk's Blog</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/6.0.0/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.2/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.2/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">centos7 yum management</h1><a id="logo" href="/.">Shalk's Blog</a><p class="description"></p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">centos7 yum management</h1><div class="post-meta">Dec 6, 2017<span> | </span><span class="category"><a href="/categories/linux/">linux</a></span><script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script><span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span><span> 阅读</span></span></div><a data-disqus-identifier="2017/12/06/centos7-yum-management/" href="/2017/12/06/centos7-yum-management/#disqus_thread" class="disqus-comment-count"></a><div class="clear"><div id="toc" class="toc-article"><div class="toc-title">文章目录</div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#使用方式"><span class="toc-number">1.</span> <span class="toc-text">使用方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常用软件源"><span class="toc-number">2.</span> <span class="toc-text">常用软件源</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#源配置方法"><span class="toc-number">3.</span> <span class="toc-text">源配置方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#yum命令"><span class="toc-number">4.</span> <span class="toc-text">yum命令</span></a></li></ol></div></div><div class="post-content"><p>centos7使用的yum进行软件包管理，centos使用rpm的软件包。</p>
-<p>一个软件可以打包成rpm后缀的单个文件，系统可以使用rpm命令安装这个rpm包，也可以移除这个rpm包。</p>
-<p>然而我们在哪里找这些软件包呢，这些软件包是有依赖关系的，按照一个rpm包还需要安装其他依赖。</p>
-<p>一套完善的包管理，需要解决至少两个问题，</p>
-<p>1.软件源</p>
-<p>2.依赖关系</p>
-<p>yum系列软件可以解决这两个问题。</p>
-<h2 id="使用方式"><a href="#使用方式" class="headerlink" title="使用方式"></a>使用方式</h2><p>首先，用<em>createrepo</em>一堆软件包建成一个软件源，然后通过http或者ftp把这个</p>
-<p>其次，在主机上配置/etct/yum.repo.d/*.repo 文件，设置远程软件源的地址。</p>
-<p>最后，使用yum命令，进行安装，卸载和升级等，安装过程会自动显示依赖。</p>
-<h2 id="常用软件源"><a href="#常用软件源" class="headerlink" title="常用软件源"></a>常用软件源</h2><p>CentOS的官方源（系列）：</p>
-<p> 根据系统自带的repo文件描述这些源，一个repo文件可以有多个源</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">CentOS-Base.repo 文件内有4个源 base update extra centosplus(默认没开)</div><div class="line"></div><div class="line">CentOS-CR.repo  持续集成的1个源，有一些为下一个版本准备的，但是没有集成测试过。</div><div class="line"></div><div class="line">CentOS-Debuginfo.repo  开了debuginfo的1个源，</div><div class="line"></div><div class="line">CentOS-fasttrack.repo  bugfix的1个源，这里不时发布错误修正和强化升级，及那些有可能纳入上游供应者的下轮更新发布的组件</div><div class="line"></div><div class="line">CentOS-Sources.repo  上面base update extra centosplus的源码的4个源</div><div class="line"></div><div class="line">CentOS-Vault.repo  Vault是对老版本归档的5个源（base update extra centos plus），有一些老版本的源可能没有了。</div></pre></td></tr></table></figure>
-<p>系统带了4+1+1+1+4+5一共16个源，只有CentOSBase.repo的前3个源是默认开启的。</p>
-<p>epel源（这个源有大批有用的软件）</p>
-<p>ius源 ，这个源有最新版本的git，nginx，php等，而且安装的时候可以多版本存在，不替换系统版本。</p>
-<p>remi源，安装新版本的php可以用这个源</p>
-<p>codeit源，可以安装最新版本的apache httpd</p>
-<p>更多可以参考<a href="https://wiki.centos.org/zh/AdditionalResources/Repositories" target="_blank" rel="external">https://wiki.centos.org/zh/AdditionalResources/Repositories</a></p>
-<h2 id="源配置方法"><a href="#源配置方法" class="headerlink" title="源配置方法"></a>源配置方法</h2><p>最简单的，在/etc/yum.repo.d/ 下面创建一个 1.repo文件，填写如下内容</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">[base]</div><div class="line">name=CentOS-$releasever - Base</div><div class="line">#mirrorlist=http://mirrorlist.centos.org/?release=$releasever&amp;arch=$basearch&amp;repo=os</div><div class="line">baseurl=https://mirrors.ustc.edu.cn/centos/$releasever/os/$basearch/</div><div class="line">gpgcheck=1</div><div class="line">enable=1</div><div class="line">gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7</div></pre></td></tr></table></figure>
-<p>第一行括号内，写源的id，不要重复即可。</p>
-<p>第二行，写名称，这个随意。</p>
-<p>后面几个变量顺序其实无所谓，mirrolist和baseurl 一般二选一，mirrolist会返回一个源地址列表， baseurl就是选一个确切的地址。</p>
-<p>gppcheck和gpgkey是配套的，用于公钥认证的。enable=1可以省略，enable=0代表，这个源不开启。</p>
-<p>实际操作有一些出入，以配置上面的软件源（epel,remi,codeit,ius)给出配置方法。</p>
-<p>配置方法如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div></pre></td><td class="code"><pre><div class="line">#!/usr/bin/env bash</div><div class="line">set -ex</div><div class="line"></div><div class="line">#centos7还是6</div><div class="line">sysver=`rpm -q --qf &quot;%&#123;VERSION&#125;&quot; $(rpm -q --whatprovides redhat-release)`</div><div class="line"></div><div class="line">cd  /etc/yum.repos.d/</div><div class="line"></div><div class="line">if [ ! -f  CentOS-Base.repo.bak ]</div><div class="line">then</div><div class="line">    cp -rf CentOS-Base.repo&#123;,.bak&#125;</div><div class="line">fi</div><div class="line">#</div><div class="line">echo &quot;配置base软件源&quot;</div><div class="line">curl -o CentOS-Base.repo -sSL https://lug.ustc.edu.cn/wiki/_export/code/mirrors/help/centos?codeblock=$((sysver-4))</div><div class="line"></div><div class="line">echo &quot;配置epel源&quot;</div><div class="line">yum remove -y epel-release || true</div><div class="line">yum install -y epel-release</div><div class="line">sed -e &apos;s!^mirrorlist=!#mirrorlist=!g&apos; \</div><div class="line">        -e &apos;s!^#baseurl=!baseurl=!g&apos; \</div><div class="line">        -e &apos;s!//download\.fedoraproject\.org/pub!//mirrors.ustc.edu.cn!g&apos; \</div><div class="line">        -e &apos;s!http://mirrors\.ustc!https://mirrors.ustc!g&apos; \</div><div class="line">        -i /etc/yum.repos.d/epel.repo /etc/yum.repos.d/epel-testing.repo</div><div class="line"></div><div class="line"></div><div class="line">echo &quot;配置ius源&quot;</div><div class="line">yum install -y https://centos$&#123;sysver&#125;.iuscommunity.org/ius-release.rpm</div><div class="line">yum install -y yum-plugin-replace</div><div class="line"></div><div class="line">echo &quot;配置remi源&quot;</div><div class="line">yum install -y http://rpms.famillecollet.com/enterprise/remi-release-$&#123;sysver&#125;.rpm</div><div class="line">echo &quot;if you want update php ,execute follow command:&quot;</div><div class="line">echo &quot; yum install php php-gd php-mysql php-mcrypt &quot;</div><div class="line">echo &quot;&quot;</div><div class="line"></div><div class="line">echo &quot;配置codeit源&quot;</div><div class="line">cd /etc/yum.repos.d &amp;&amp; wget https://repo.codeit.guru/codeit.el$&#123;sysver&#125;.repo</div><div class="line">echo &quot;if you want update httpd ,execute follow command:&quot;</div><div class="line">echo &quot; yum install httpd &quot;</div><div class="line">echo &quot;&quot;</div><div class="line"></div><div class="line">yum repolist</div></pre></td></tr></table></figure>
-<p>查看有哪些源</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yum install -y yum-utils</div></pre></td></tr></table></figure>
-<p>安装yum-config-manager</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">yum-config-manager --enable  &lt;id&gt;</div><div class="line">yum-config-manager --disable &lt;id&gt; </div><div class="line"># 不带&lt;id&gt; 就是显示</div><div class="line">yum-config-manager --add-repo=&lt;repo文件，或者url/file.repo&gt;</div></pre></td></tr></table></figure>
-<h2 id="yum命令"><a href="#yum命令" class="headerlink" title="yum命令"></a>yum命令</h2><p>主要如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">yum install name</div><div class="line"></div><div class="line">yum remove name</div><div class="line"></div><div class="line">yum search xxxx</div><div class="line"></div><div class="line">yum list xxx</div><div class="line">yum info xxx</div><div class="line"></div><div class="line">#可以用 --showduplicates 显示多版本</div><div class="line">#安装时输入带版本号的软件名称，安装特定版本</div></pre></td></tr></table></figure>
-</div><script type="text/javascript" src="/js/share.js?v=0.0.0" async></script><a data-url="https://shalk.github.io/2017/12/06/centos7-yum-management/" data-id="cjde4uawu000ld0vizpe3f2t1" class="article-share-link">分享</a><div class="tags"><a href="/tags/linux/">linux</a></div><div class="post-nav"><a href="/2018/01/25/hello-sql/" class="pre">《Sams Teach Yourself SQL in 10 Minutes》学习笔记</a><a href="/2017/11/29/java的clone和Cloneable/" class="next">java的clone和Cloneable</a></div><div id="disqus_thread"><div class="btn_click_load"><button class="disqus_click_btn">阅读评论 「请确保 disqus.com 可以正常加载」</button></div><script>var disqus_shortname = 'shalk';
-var disqus_identifier = '2017/12/06/centos7-yum-management/';
-var disqus_title = 'centos7 yum management';
-var disqus_url = 'https://shalk.github.io/2017/12/06/centos7-yum-management/';
-$('.btn_click_load').click(function() {
-  (function() {
-    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
-  $('.btn_click_load').css('display','none');
-});
-$.ajax({
-  url: 'https://disqus.com/favicon.ico',
-  timeout: 3000,
-  type: 'GET',
-  success: (function() {
-    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    $('.btn_click_load').css('display','none');
-  })(),
-  error: function() {
-    $('.btn_click_load').css('display','block');
-  }
-});</script><script id="dsq-count-scr" src="//shalk.disqus.com/count.js" async></script></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank" class="search-form"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="https://shalk.github.io"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/check-mk/">check_mk</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/http/">http</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/kubernetes/">kubernetes</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/sql/">sql</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/linux/" style="font-size: 15px;">linux</a> <a href="/tags/docker/" style="font-size: 15px;">docker</a> <a href="/tags/java/" style="font-size: 15px;">java</a> <a href="/tags/springboot/" style="font-size: 15px;">springboot</a> <a href="/tags/log/" style="font-size: 15px;">log</a> <a href="/tags/tij/" style="font-size: 15px;">tij</a> <a href="/tags/angular/" style="font-size: 15px;">angular</a> <a href="/tags/check-mk/" style="font-size: 15px;">check_mk</a> <a href="/tags/monitor/" style="font-size: 15px;">monitor</a> <a href="/tags/hexo/" style="font-size: 15px;">hexo</a> <a href="/tags/github/" style="font-size: 15px;">github</a> <a href="/tags/blog/" style="font-size: 15px;">blog</a> <a href="/tags/sql/" style="font-size: 15px;">sql</a> <a href="/tags/http/" style="font-size: 15px;">http</a> <a href="/tags/kubernetes/" style="font-size: 15px;">kubernetes</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/02/08/java编程思想笔记-第20章注解/">java编程思想笔记-第20章注解</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/06/intro-to-http/">http简介</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/25/hello-sql/">《Sams Teach Yourself SQL in 10 Minutes》学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/06/centos7-yum-management/">centos7 yum management</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/29/java的clone和Cloneable/">java的clone和Cloneable</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/24/Spring-Boot配置日志/">Spring Boot配置日志</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/14/java自动包装/">java自动包装</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/14/TIJ-review-chapter16-arrays/">TIJ review chapter16 arrays</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/30/kubernetes-note-1/">kubernetes note 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/22/TIJ-review-chapter15-generic/">TIJ review chapter15 generic</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-comment-o"> 最近评论</i></div><script type="text/javascript" src="//shalk.disqus.com/recent_comments_widget.js?num_items=5&amp;hide_avatars=1&amp;avatar_size=32&amp;excerpt_length=20&amp;hide_mods=1"></script></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="http://www.example1.com/" title="site-name1" target="_blank">site-name1</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2018 <a href="/." rel="nofollow">Shalk's Blog.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/3.0.47/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/3.0.47/jquery.fancybox.min.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
+extends base
+
+block title
+  title= page.title + ' | ' + config.title
+
+block content
+  .post
+    h1.post-title= page.title
+    .post-meta= page.date.format('ll')
+      if page.categories.length > 0
+        span= ' | '
+        span.category
+          for category in page.categories.toArray()
+            a(href=url_for(category.path))= category.name
+      if theme.busuanzi == true
+        script(src='https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js', async)
+        span#busuanzi_container_page_pv= ' | '
+          span#busuanzi_value_page_pv
+          span= ' ' + __('Hits')
+    if theme.disqus
+      a.disqus-comment-count(data-disqus-identifier=page.path, href=url_for(page.path) + '#disqus_thread')
+    if theme.changyan
+      a.ds-thread-count(href=url_for(page.path) + '#SOHUCS')
+        span#changyan_count_unit(style='font-size: 15px; color: #6E7173;') 0
+        span= ' ' + __('Comment')
+      script(src='https://assets.changyan.sohu.com/upload/plugins/plugins.count.js', async)
+    if theme.valine.enable
+      a.disqus-comment-count( href=url_for(page.path) + '#vcomment')
+        span.valine-comment-count(data-xid=url_for(page.path))
+        span 条评论
+    if page.toc
+      div(class='clear')
+        div(id='toc' class='toc-article')
+          div(class='toc-title')= __('contents')
+          != toc(page.content, {list_number: theme.toc_number})
+    .post-content
+      != page.content
+    if theme.donate.enable == true
+      iframe(src='/donate/?AliPayQR=' + theme.donate.alipay_qr + '&WeChatQR=' + theme.donate.wechat_qr + '&GitHub=' + theme.donate.github + '&BTCQR=' + theme.donate.btc_qr + '&BTCKEY='+ theme.donate.btc_key + '&PayPal=' + theme.donate.paypal_url, style='overflow-x:hidden; overflow-y:hidden; border:0xp none #fff; min-height:240px; width:100%;', frameborder='0', scrolling='no')
+    if theme.shareto == true
+      script(type='text/javascript', src=url_for(theme.js) + '/share.js' + '?v=' + theme.version, async)
+      a.article-share-link(data-url=page.permalink, data-id=page._id, data-qrcode=qrcode(page.permalink))= __('shareto')
+
+    include _partial/tag.pug
+    include _partial/post_nav.pug
+
+    if page.comments
+      include _partial/comments.pug

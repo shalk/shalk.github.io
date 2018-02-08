@@ -1,102 +1,48 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description"><title>java编程思想笔记-第20章注解 | Shalk's Blog</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/6.0.0/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.2/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.2/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">java编程思想笔记-第20章注解</h1><a id="logo" href="/.">Shalk's Blog</a><p class="description"></p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">java编程思想笔记-第20章注解</h1><div class="post-meta">Feb 8, 2018<span> | </span><span class="category"><a href="/categories/java/">java</a></span><script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script><span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span><span> 阅读</span></span></div><a data-disqus-identifier="2018/02/08/java编程思想笔记-第20章注解/" href="/2018/02/08/java编程思想笔记-第20章注解/#disqus_thread" class="disqus-comment-count"></a><div class="clear"><div id="toc" class="toc-article"><div class="toc-title">文章目录</div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#常见的注解"><span class="toc-number">1.</span> <span class="toc-text">常见的注解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#自定义注解"><span class="toc-number">2.</span> <span class="toc-text">自定义注解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#运行时解析"><span class="toc-number">3.</span> <span class="toc-text">运行时解析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#编译时解析"><span class="toc-number">4.</span> <span class="toc-text">编译时解析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#其他"><span class="toc-number">5.</span> <span class="toc-text">其他</span></a></li></ol></div></div><div class="post-content"><p>在编写单元测试，编写spring项目，编写jpa的实体类时，经常要写@Test ，@Table @Service @Autowired 这样的注解，只知道什么时候写什么，那注解作为java的语法，如何编写自己的注解，如何使用。 spring框架，hibernate， junit这些框架是如何利用这些注解进行了一些便利的操作。</p>
-<h2 id="常见的注解"><a href="#常见的注解" class="headerlink" title="常见的注解"></a>常见的注解</h2><p>考虑一个实体类，在使用hibernate时这是非常常见的。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">@Entiy</div><div class="line">@Table(&quot;user&quot;)</div><div class="line">class User implements Serializable &#123;</div><div class="line">    </div><div class="line">    private static final long serialVersionUID = -7348802315403048877L;</div><div class="line"></div><div class="line">    @Column</div><div class="line">    private String name;</div><div class="line">  </div><div class="line">    @Id	</div><div class="line">    @GeneratedValue(strategy = GenerationType.IDENTITY)</div><div class="line">    @Column(name = &quot;id&quot;)</div><div class="line">    private Integer id;</div><div class="line">	...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>这个例子中，@Column  @Table 都是注解，这些注解是作用于方法或者类 。</p>
-<h2 id="自定义注解"><a href="#自定义注解" class="headerlink" title="自定义注解"></a>自定义注解</h2><p>如果创建一个自己的注解呢，参考这些注解的源码，写法如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">//UseCase.java</div><div class="line"></div><div class="line">import java.lang.annotation.ElementType;</div><div class="line">import java.lang.annotation.Retention;</div><div class="line">import java.lang.annotation.RetentionPolicy;</div><div class="line">import java.lang.annotation.Target;</div><div class="line"></div><div class="line">@Target(&#123;ElementType.METHOD,ElementType.TYPE, ElementType.FIELD, ElementType.PARAMETER, ElementType.CONSTRUCTOR,ElementType.PACKAGE, ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE&#125;)</div><div class="line">@Retention(RetentionPolicy.RUNTIME)</div><div class="line">@Inherited  </div><div class="line">@Documented  </div><div class="line">public @interface UseCase &#123;</div><div class="line"></div><div class="line">    public int id();</div><div class="line">    public String description() default &quot;no description&quot;;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>整体格式如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">@Target(取值)</div><div class="line">@Retention(取值)</div><div class="line">@其他可选注解</div><div class="line">public @interface 名称 &#123;</div><div class="line">  域；</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>说明：</p>
-<p>这个@interface 代表是一个注解，上面必须要写两个额外的注解，</p>
-<p>@Target</p>
-<p> 代表这个注解可以写在那些地方，例如 类，方法，域，参数，包，构造器， 局部变量，注解等 ，最常见的是类，方法，域。</p>
-<p>可以改变这个值尝试一下，并不一一介绍。</p>
-<p>其中包的那个值是写在java-info.java里，这个文件是给javadoc使用的，并不是很常见。</p>
-<p>@Retention</p>
-<p>注解保留多久，仅在源码中、仅在class文件中、运行时。</p>
-<p>@Inherited  @Documented  这两个注解是可选的，前者代表，使用了这个的注解，注释类A之后，B继承了A，利用反射查询B的注解可以查询到注解，如果没有使用@Inherited，就查询不到。后者表示，加注解的地方生成javadoc的时候把注解也显示出来。</p>
-<p>UseCase可以有多个域，域只可以是</p>
-<ul>
-<li>基本类型</li>
-<li>String</li>
-<li>enum</li>
-<li>Class类型</li>
-<li>注解</li>
-<li>以上所有类型的数组</li>
-</ul>
-<p>这些域是可以有默认值。</p>
-<p>在使用注解的时候，用法基本如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">形式1：@Test1(id=1,name=&quot;aaa&quot;)</div><div class="line"></div><div class="line">形式2：@Test2</div><div class="line"></div><div class="line">形式3：@Test3(f=&#123;1,2,3&#125;)</div><div class="line"></div><div class="line">形式4：@Table(&quot;aaaa&quot;)</div></pre></td></tr></table></figure>
-<p>没有值的，域必须复制。（形式1）</p>
-<p>而且要写成 key=value 的形式，如果是数组,value要写成{}。（形式3）</p>
-<p>如果没有域，或者域都有默认值，可以不写后面的括号。（形式2）</p>
-<p>如果只有一个域没有默认值，可以直接写value，不用写key=1 （形式4）</p>
-<p>上面限制颇多，主要围绕几点：</p>
-<ol>
-<li>注解的使用范围</li>
-<li>注解的保留范围</li>
-<li>注解的域</li>
-<li>写法</li>
-</ol>
-<p>这些限制，大部分在编译阶段就能检查到，也不用特别担心。</p>
-<h2 id="运行时解析"><a href="#运行时解析" class="headerlink" title="运行时解析"></a>运行时解析</h2><p>自定义注解类写好后，把注解可以加到我们的类中，例如</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line">package com.xshalk.springdemo;</div><div class="line">// TestCase.java</div><div class="line"></div><div class="line">@UseCase(id=3, description = &quot;this is also type&quot;)</div><div class="line">enum Enum1 &#123;</div><div class="line">    AA, BB;</div><div class="line">&#125;</div><div class="line"></div><div class="line">@UseCase(id=5, description = &quot;this is type&quot;)</div><div class="line">public class TestCase &#123;</div><div class="line"></div><div class="line">    @UseCase(id=6,description = &quot;this is field&quot;)</div><div class="line">    public static final int count = 10;</div><div class="line"></div><div class="line">    private Enum1 AA;</div><div class="line"></div><div class="line">    @UseCase(id=3,description = &quot;this is constructor&quot;)</div><div class="line">    TestCase()&#123;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @UseCase(id = 1, description = &quot;this is method&quot;)</div><div class="line">    public void case1(</div><div class="line">            @UseCase(id=7,description = &quot;this is parameter&quot;) String s1,</div><div class="line">            int i1) &#123;</div><div class="line"></div><div class="line">        @UseCase(id=13, description = &quot;this is local variable&quot;)</div><div class="line">        int i = 10;</div><div class="line">        i = i + 1;</div><div class="line">        System.out.println(i);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @UseCase(id = 2, description = &quot;this is also method&quot;)</div><div class="line">    public void case2() &#123;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>用另外一个类来解析一部分注解：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">import java.lang.reflect.Method;</div><div class="line"></div><div class="line">public class UseCaseTracker &#123;</div><div class="line"></div><div class="line">    public static void printUseCaseAnnotaion(Class&lt;?&gt; cl) &#123;</div><div class="line">        UseCase case1 = cl.getAnnotation(UseCase.class);</div><div class="line">        if (case1 != null)&#123;</div><div class="line">            System.out.println(&quot;打印类注解：&quot;);</div><div class="line">            printU(case1);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        System.out.println(&quot;打印方法注解：&quot;);</div><div class="line">        for (Method m : cl.getMethods()) &#123;</div><div class="line">            UseCase tmpu = m.getAnnotation(UseCase.class);</div><div class="line">            if (tmpu != null)&#123;</div><div class="line">                System.out.println(&quot;方法名:&quot; + m.getName());</div><div class="line">                printU(tmpu);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private static void printU(UseCase u) &#123;</div><div class="line">        System.out.println(&quot;id:&quot; + u.id() + &quot;  description:&quot; + u.description());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        printUseCaseAnnotaion(TestCase.class);</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
-<p>Class和Method的getAnnotation方法来读取。</p>
-<p>这种方式只能读取，保留范围是运行时的。</p>
-<h2 id="编译时解析"><a href="#编译时解析" class="headerlink" title="编译时解析"></a>编译时解析</h2><p>java从1.6开始提供了一套api用于创建自定义的注解解析器，api文档见<a href="https://docs.oracle.com/javase/7/docs/api/javax/annotation/processing/package-summary.html" target="_blank" rel="external">这里</a>。</p>
-<p>在编译期间，处理注解，这些注解一般把target设置成source。</p>
-<p>目前只要按照api文档，实现abstractProcessor, 打成jar包，编译使用注解的类时，把jar加到classpath中，这样javac 加上-processor选项，就会在编译阶段调用processor。</p>
-<p>详细见(<a href="http://hannesdorfmann.com/annotation-processing/annotationprocessing101" target="_blank" rel="external">http://hannesdorfmann.com/annotation-processing/annotationprocessing101</a>)</p>
-<p>这篇文章给出了一个实例源码，介绍较为详细，总结如下：</p>
-<p>分成以下几个步骤：</p>
-<ol>
-<li>在process读取到env的时候，查询所有使用特定注解的element</li>
-<li>校验这个element是否满足条件，注解参数是否齐全。</li>
-<li>把信息都查询并封装到 对象里。</li>
-<li>使用对象生成 java源文件。（这里可以用库square/javaWriter 来生成源码)</li>
-</ol>
-<p>需要注意的是：</p>
-<ol>
-<li>异常捕获，不要把堆栈抛出去</li>
-<li>使用messager打印信息</li>
-<li>使用elements和types静态工具类，在正确使用javax.lang.model</li>
-<li>考虑process多回合处理的情况，处理完之后要清理一下上回合的信息。</li>
-</ol>
-<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p>在此之前，sun提供了apt库，不推荐继续用。</p>
-<p>另外也可以使用javaassist的库读取class文件，然后反射可以读取到注解</p>
-<p>TODO</p>
-<p>查看lomok的源码 ,Spring的源码。</p>
-<p>参考</p>
-<p><a href="https://alexecollins.com/java-annotation-processor-tutorial/" target="_blank" rel="external">https://alexecollins.com/java-annotation-processor-tutorial/</a></p>
-<p><a href="https://www.race604.com/annotation-processing/" target="_blank" rel="external">https://www.race604.com/annotation-processing/</a></p>
-<p><a href="https://stackoverflow.com/questions/21544446/how-do-you-dynamically-compile-and-load-external-java-classes" target="_blank" rel="external">https://stackoverflow.com/questions/21544446/how-do-you-dynamically-compile-and-load-external-java-classes</a></p>
-<p><a href="http://blog.csdn.net/duo2005duo/article/details/50541281" target="_blank" rel="external">http://blog.csdn.net/duo2005duo/article/details/50541281</a></p>
-<p><a href="https://github.com/bozaro/example-annotation-processor" target="_blank" rel="external">https://github.com/bozaro/example-annotation-processor</a></p>
-</div><script type="text/javascript" src="/js/share.js?v=0.0.0" async></script><a data-url="https://shalk.github.io/2018/02/08/java编程思想笔记-第20章注解/" data-id="cjde4uaxh001bd0vifj8pukvm" class="article-share-link">分享</a><div class="tags"><a href="/tags/java/">java</a><a href="/tags/tij/">tij</a></div><div class="post-nav"><a href="/2018/02/06/intro-to-http/" class="next">http简介</a></div><div id="disqus_thread"><div class="btn_click_load"><button class="disqus_click_btn">阅读评论 「请确保 disqus.com 可以正常加载」</button></div><script>var disqus_shortname = 'shalk';
-var disqus_identifier = '2018/02/08/java编程思想笔记-第20章注解/';
-var disqus_title = 'java编程思想笔记-第20章注解';
-var disqus_url = 'https://shalk.github.io/2018/02/08/java编程思想笔记-第20章注解/';
-$('.btn_click_load').click(function() {
-  (function() {
-    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
-  $('.btn_click_load').css('display','none');
-});
-$.ajax({
-  url: 'https://disqus.com/favicon.ico',
-  timeout: 3000,
-  type: 'GET',
-  success: (function() {
-    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    $('.btn_click_load').css('display','none');
-  })(),
-  error: function() {
-    $('.btn_click_load').css('display','block');
-  }
-});</script><script id="dsq-count-scr" src="//shalk.disqus.com/count.js" async></script></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank" class="search-form"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="https://shalk.github.io"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/check-mk/">check_mk</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/http/">http</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/kubernetes/">kubernetes</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/sql/">sql</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/linux/" style="font-size: 15px;">linux</a> <a href="/tags/docker/" style="font-size: 15px;">docker</a> <a href="/tags/java/" style="font-size: 15px;">java</a> <a href="/tags/springboot/" style="font-size: 15px;">springboot</a> <a href="/tags/log/" style="font-size: 15px;">log</a> <a href="/tags/tij/" style="font-size: 15px;">tij</a> <a href="/tags/angular/" style="font-size: 15px;">angular</a> <a href="/tags/check-mk/" style="font-size: 15px;">check_mk</a> <a href="/tags/monitor/" style="font-size: 15px;">monitor</a> <a href="/tags/hexo/" style="font-size: 15px;">hexo</a> <a href="/tags/github/" style="font-size: 15px;">github</a> <a href="/tags/blog/" style="font-size: 15px;">blog</a> <a href="/tags/sql/" style="font-size: 15px;">sql</a> <a href="/tags/http/" style="font-size: 15px;">http</a> <a href="/tags/kubernetes/" style="font-size: 15px;">kubernetes</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/02/08/java编程思想笔记-第20章注解/">java编程思想笔记-第20章注解</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/06/intro-to-http/">http简介</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/25/hello-sql/">《Sams Teach Yourself SQL in 10 Minutes》学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/06/centos7-yum-management/">centos7 yum management</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/29/java的clone和Cloneable/">java的clone和Cloneable</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/24/Spring-Boot配置日志/">Spring Boot配置日志</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/14/java自动包装/">java自动包装</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/14/TIJ-review-chapter16-arrays/">TIJ review chapter16 arrays</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/30/kubernetes-note-1/">kubernetes note 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/22/TIJ-review-chapter15-generic/">TIJ review chapter15 generic</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-comment-o"> 最近评论</i></div><script type="text/javascript" src="//shalk.disqus.com/recent_comments_widget.js?num_items=5&amp;hide_avatars=1&amp;avatar_size=32&amp;excerpt_length=20&amp;hide_mods=1"></script></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="http://www.example1.com/" title="site-name1" target="_blank">site-name1</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2018 <a href="/." rel="nofollow">Shalk's Blog.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/3.0.47/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/3.0.47/jquery.fancybox.min.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
+extends base
+
+block title
+  title= page.title + ' | ' + config.title
+
+block content
+  .post
+    h1.post-title= page.title
+    .post-meta= page.date.format('ll')
+      if page.categories.length > 0
+        span= ' | '
+        span.category
+          for category in page.categories.toArray()
+            a(href=url_for(category.path))= category.name
+      if theme.busuanzi == true
+        script(src='https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js', async)
+        span#busuanzi_container_page_pv= ' | '
+          span#busuanzi_value_page_pv
+          span= ' ' + __('Hits')
+    if theme.disqus
+      a.disqus-comment-count(data-disqus-identifier=page.path, href=url_for(page.path) + '#disqus_thread')
+    if theme.changyan
+      a.ds-thread-count(href=url_for(page.path) + '#SOHUCS')
+        span#changyan_count_unit(style='font-size: 15px; color: #6E7173;') 0
+        span= ' ' + __('Comment')
+      script(src='https://assets.changyan.sohu.com/upload/plugins/plugins.count.js', async)
+    if theme.valine.enable
+      a.disqus-comment-count( href=url_for(page.path) + '#vcomment')
+        span.valine-comment-count(data-xid=url_for(page.path))
+        span 条评论
+    if page.toc
+      div(class='clear')
+        div(id='toc' class='toc-article')
+          div(class='toc-title')= __('contents')
+          != toc(page.content, {list_number: theme.toc_number})
+    .post-content
+      != page.content
+    if theme.donate.enable == true
+      iframe(src='/donate/?AliPayQR=' + theme.donate.alipay_qr + '&WeChatQR=' + theme.donate.wechat_qr + '&GitHub=' + theme.donate.github + '&BTCQR=' + theme.donate.btc_qr + '&BTCKEY='+ theme.donate.btc_key + '&PayPal=' + theme.donate.paypal_url, style='overflow-x:hidden; overflow-y:hidden; border:0xp none #fff; min-height:240px; width:100%;', frameborder='0', scrolling='no')
+    if theme.shareto == true
+      script(type='text/javascript', src=url_for(theme.js) + '/share.js' + '?v=' + theme.version, async)
+      a.article-share-link(data-url=page.permalink, data-id=page._id, data-qrcode=qrcode(page.permalink))= __('shareto')
+
+    include _partial/tag.pug
+    include _partial/post_nav.pug
+
+    if page.comments
+      include _partial/comments.pug
